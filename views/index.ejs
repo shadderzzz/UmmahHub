@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ummah Hub</title>
+    <link rel="stylesheet" href="/styles.css">  <!-- Ensure the correct path -->
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1 class="title">Ummah Hub</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/specialIslamicDays">Islamic Days</a></li>
+                
+                <!-- Forums with Submenu -->
+                <li class="dropdown">
+                    <a href="#">Forums</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/qaForum">Q&A Forum</a></li>
+                        <li><a href="/duaForum">Dua Forum</a></li>
+                    </ul>
+                </li>
+
+
+                <li><a href="/chatbot">Chatbot</a></li>
+                <li><a href="/Zakat">Zakat</a></li>
+                <li><a href="/prayerTimes">Prayer Times</a></li>
+                <!-- Show Login if not logged in, Show Logout if logged in -->
+                 <% if (!userId) { %>
+                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
+                <% } else { %>
+                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="welcome">
+            <% if (userId) { %>
+                <h2>Welcome to Ummah Hub, <%= userId %>!</h2>
+                <p>Explore prayer times, Quranic resources, Islamic articles, and more.</p>
+            <% } else { %>
+                <h2>Welcome to Ummah Hub</h2>
+                <p>Your one-stop platform for prayer times, Quranic resources, Islamic articles, and community support.</p>
+            <% } %>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

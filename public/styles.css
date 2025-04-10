@@ -1,0 +1,1036 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Header Styling */
+header {
+    background: #28a745;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+main {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 2rem;
+}
+
+/* Navigation Bar */
+nav {
+    margin-top: 10px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffcc00;
+    border-radius: 5px;
+}
+
+/* Forum Category Selection */
+.category-selection {
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 500px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.category-selection h2 {
+    margin-bottom: 20px;
+}
+
+.category-btn {
+    display: block;
+    background-color: #ffcc00;
+    color: #2c3e50;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 10px 0;
+    transition: background 0.3s;
+}
+
+.category-btn:hover {
+    background-color: #ffdd44;
+}
+
+/* Forum List */
+.forum-list {
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 700px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.forum-list h2 {
+    margin-bottom: 20px;
+}
+
+.forum-item {
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: background 0.3s;
+}
+
+.forum-item:hover {
+    background: #eeeeee;
+}
+
+.forum-item h3 a {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forum-item h3 a:hover {
+    color: #ffcc00;
+}
+
+/* Post Button */
+.post-btn {
+    display: inline-block;
+    background-color: #ff5733;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.post-btn:hover {
+    background-color: #d84315;
+}
+
+/* Form Styling */
+.form-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    margin-bottom: 15px;
+}
+
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #1a252f;
+}
+
+/* Question & Answer Page */
+.question {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question p {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Answers Section */
+.answers {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.answers h2 {
+    margin-bottom: 10px;
+}
+
+.answer-item {
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Answer Form */
+.answer-form {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.answer-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.answer-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.answer-form button:hover {
+    background-color: #1a252f;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none; /* Hide submenu by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #34495e; /* Darker shade */
+    border-radius: 5px;
+    min-width: 160px;
+    z-index: 1000;
+    text-align: left;
+    padding: 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Show submenu only when hovering over the parent */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Style submenu items */
+.dropdown-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+/* Hover effect for submenu items */
+.dropdown-menu a:hover {
+    background-color: #ffcc00;
+    color: black;
+}
+
+/* Forum Container */
+.forum-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.forum-container h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+.forum-container p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Forum Categories */
+.forum-categories {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.forum-box {
+    display: block;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.forum-box:hover {
+    background-color: #ffcc00;
+    transform: scale(1.05);
+}
+
+/* Forum Container */
+.forum-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.forum-container h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+.forum-container p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Forum Form */
+.forum-form {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.forum-form input, .forum-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.forum-form button {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.forum-form button:hover {
+    background-color: #1a252f;
+}
+
+/* Forum Posts */
+.forum-posts {
+    margin-top: 30px;
+}
+
+.post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.post h3 a {
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.post h3 a:hover {
+    text-decoration: underline;
+}
+
+.post p {
+    color: #555;
+}
+
+.post small {
+    display: block;
+    color: #777;
+    margin-top: 10px;
+}
+
+/* Post Question Button */
+.post-question-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.post-btn {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.post-btn:hover {
+    background-color: #1a252f;
+}
+
+/* Post Question Page */
+.post-question-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.post-question-container input,
+.post-question-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.post-question-container button {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.post-question-container button:hover {
+    background-color: #1a252f;
+}
+
+/* Answers Page Styling */
+.answers-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Question Box */
+.question-container {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.question-container h2 {
+    font-size: 1.8rem;
+}
+
+.question-container p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+/* Answer Cards */
+.answer {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.answer:hover {
+    transform: scale(1.02);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.answer p {
+    font-size: 1rem;
+    color: #333;
+    text-align: left;
+}
+
+.answer small {
+    display: block;
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 5px;
+}
+
+/* Back Button */
+.back-btn {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    margin: 20px auto;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .answers-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .question-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .question-container p {
+        font-size: 1rem;
+    }
+
+    .answer {
+        padding: 10px;
+    }
+}
+
+/* Make the entire post tile clickable */
+.post-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.post:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.view-answers-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff; /* Bootstrap blue */
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.view-answers-btn:hover {
+    background-color: #0056b3; /* Darker blue */
+    transform: scale(1.05);
+}
+
+.view-answers-btn:active {
+    background-color: #004099; /* Even darker blue */
+    transform: scale(0.98);
+}
+
+.view-answers {
+    text-align: center;
+    margin-top: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Form Styling */
+.dua-form {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dua-form h2 {
+    text-align: center;
+    color: #333;
+}
+
+.dua.seen {
+    border-left: 5px solid #007bff;
+    background: #e9ecef;
+}
+
+.dua-toggle {
+    margin-bottom: 20px;
+}
+
+.dua-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dua-form textarea {
+    width: 100%;
+    height: 120px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.dua-form button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto 0;
+}
+
+.dua-form button:hover {
+    background-color: #218838;
+}
+
+/* Toggle Button (Dropdown) */
+.dua-toggle {
+    text-align: center;
+    margin: 20px;
+}
+
+.dua-toggle label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#duaCategory {
+    font-size: 16px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Dua Cards */
+.dua-list {
+    width: 50%;
+    margin: 20px auto;
+}
+
+.dua {
+    background: #f8f9fa;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border-left: 5px solid #28a745;
+}
+
+.dua p {
+    font-size: 16px;
+    color: #333;
+}
+
+.seen {
+    background-color: #d1ecf1;
+}
+
+/* Buttons */
+.seen-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-top: 10px;
+}
+
+.seen-btn:hover {
+    background-color: #0056b3;
+}
+
+.unseen-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-top: 10px;
+}
+
+.unseen-btn:hover {
+    background-color: #b02a37;
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin-top: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #b02a37;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
+
+/* Prayer Times Page */
+.prayer-times-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.prayer-times-container h2 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.prayer-times-container label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+#locationInput {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #219150;
+}
+
+.prayer-times {
+    margin-top: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.prayer-times h3 {
+    font-size: 20px;
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+.prayer-times ul {
+    list-style: none;
+    padding: 0;
+}
+
+.prayer-times li {
+    font-size: 18px;
+    padding: 8px;
+    color: #555;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+}
+
+.prayer-times li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .prayer-times-container {
+        width: 90%;
+    }
+
+    #locationInput {
+        width: 90%;
+    }
+}
+
+.zakat-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.zakat-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.zakat-form label {
+    font-weight: bold;
+    text-align: left;
+}
+
+.zakat-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.zakat-form button {
+    margin-top: 15px;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.zakat-form button:hover {
+    background: #218838;
+}
+
+#zakatAmount {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.chatbot-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.chat-window {
+    height: 300px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-message {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.chat-message.user {
+    background: #28a745;
+    color: white;
+    align-self: flex-end;
+    text-align: right;
+}
+
+.chat-message.bot {
+    background: #007bff;
+    color: white;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.chat-message.error {
+    background: #d9534f;
+    color: white;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input textarea {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.chat-input button {
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.chat-input button:hover {
+    background: #218838;
+}

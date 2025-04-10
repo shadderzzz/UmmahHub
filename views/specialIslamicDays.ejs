@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Islamic Days</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1 class="title">Ummah Hub</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/specialIslamicDays">Islamic Days</a></li>
+                <li class="dropdown">
+                    <a href="#">Forums</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/qaForum">Q&A Forum</a></li>
+                        <li><a href="/duaForum">Dua Forum</a></li>
+                    </ul>
+                </li>
+                <li><a href="/chatbot">Chatbot</a></li>
+                <li><a href="/Zakat">Zakat</a></li>
+                <li><a href="/prayerTimes">Prayer Times</a></li>
+                <% if (!userId) { %>
+                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
+                <% } else { %>
+                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="special-days-container">
+            <h2>Special Islamic Days</h2>
+            <p>Stay updated with important Islamic dates and events.</p>
+            <iframe 
+                style="width: 100%; max-width: 400px; height: 460px; border: 1px solid #ddd;" 
+                scrolling="no" 
+                src="https://www.islamicfinder.org/specialislamicdays">
+            </iframe>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

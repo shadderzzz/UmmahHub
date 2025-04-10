@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Times</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+        async function fetchPrayerTimes(city, country) {
+            try {
+                const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=2`);
+                const data = await response.json();
+
+                if (data.code === 200) {
+                    const timings = data.data.timings;
+                    document.getElementById('fajr').innerText = timings.Fajr;
+                    document.getElementById('dhuhr').innerText = timings.Dhuhr;
+                    document.getElementById('asr').innerText = timings.Asr;
+                    document.getElementById('maghrib').innerText = timings.Maghrib;
+                    document.getElementById('isha').innerText = timings.Isha;
+                } else {
+                    alert('Could not fetch prayer times. Please check your input.');
+                }
+            } catch (error) {
+                alert('Error fetching prayer times. Please try again.');
+            }
+        }
+
+        function updatePrayerTimes() {
+            const locationInput = document.getElementById('locationInput').value;
+            const [city, country] = locationInput.split(',').map(s => s.trim());
+
+            if (city && country) {
+                fetchPrayerTimes(city, country);
+            } else {
+                alert('Please enter a valid city and country (e.g., "London, UK")');
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="title">Ummah Hub</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/specialIslamicDays">Islamic Days</a></li>
+                <li class="dropdown">
+                    <a href="#">Forums</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/qaForum">Q&A Forum</a></li>
+                        <li><a href="/duaForum">Dua Forum</a></li>
+                    </ul>
+                </li>
+                <li><a href="/chatbot">Chatbot</a></li>
+                <li><a href="/Zakat">Zakat</a></li>
+                <li><a href="/prayerTimes">Prayer Times</a></li>
+                <% if (!userId) { %>
+                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
+                <% } else { %>
+                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="prayer-times-container">
+            <h2>Prayer Times</h2>
+            <label for="locationInput">Enter your city and country:</label>
+            <input type="text" id="locationInput" placeholder="e.g., London, UK">
+            <button onclick="updatePrayerTimes()">Update</button>
+            
+            <div class="prayer-times">
+                <h3>Today's Prayer Times</h3>
+                <ul>
+                    <li>Fajr: <span id="fajr">--:--</span></li>
+                    <li>Dhuhr: <span id="dhuhr">--:--</span></li>
+                    <li>Asr: <span id="asr">--:--</span></li>
+                    <li>Maghrib: <span id="maghrib">--:--</span></li>
+                    <li>Isha: <span id="isha">--:--</span></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

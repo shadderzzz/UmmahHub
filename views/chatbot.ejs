@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            const responseBox = document.getElementById("response");
+    
+            const apiKey = "sk-0176c41faafb4701b999560edcfd5228";
+            const baseUrl = "https://api.deepseek.com";
+    
+            const requestBody = {
+                model: "deepseek-chat",
+                messages: [{ role: "user", content: userInput }],
+                max_tokens: 100
+            };
+    
+            try {
+                const response = await fetch(`${baseUrl}/v1/chat/completions`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+    
+                if (!response.ok) {
+                    const text = await response.text();
+                    throw new Error(`API Error: ${text}`);
+                }
+    
+                const data = await response.json();
+                responseBox.innerHTML += `<div class="chat-message user"><strong>You:</strong> ${userInput}</div>`;
+                responseBox.innerHTML += `<div class="chat-message bot"><strong>Bot:</strong> ${data.choices?.[0]?.message?.content || "No response received."}</div>`;
+    
+                document.getElementById("userInput").value = "";
+                responseBox.scrollTop = responseBox.scrollHeight;
+    
+            } catch (error) {
+                responseBox.innerHTML += `<div class="chat-message error">Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="title">Ummah Hub</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/Calender">Calendar</a></li>
+                <li class="dropdown">
+                    <a href="#">Forums</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/qaForum">Q&A Forum</a></li>
+                        <li><a href="/duaForum">Dua Forum</a></li>
+                    </ul>
+                </li>
+                <li><a href="/Zakat">Zakat</a></li>
+                <li><a href="/prayerTimes">Prayer Times</a></li>
+                <li><a href="/specialIslamicDays">Islamic Days</a></li>
+                <li><a href="/chatbot">Chatbot</a></li>
+                <% if (!userId) { %>
+                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
+                <% } else { %>
+                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="chatbot-container">
+            <h2>Ask Anything!</h2>
+            <p>Chat with our AI-powered assistant.</p>
+
+            <div class="chat-window">
+                <div id="response" class="chat-messages"></div>
+            </div>
+
+            <div class="chat-input">
+                <textarea id="userInput" placeholder="Type your message..." rows="2"></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

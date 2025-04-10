@@ -1,0 +1,25 @@
+{
+  "name": "ummahhub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.3",
+    "bcrpyt": "^2.0.0",
+    "bcrypt": "^5.1.1",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-sanitizer": "^1.0.6",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "mysql2": "^3.11.5",
+    "node.js": "^0.0.1-security",
+    "request": "^2.88.2",
+    "validator": "^13.12.0"
+  }
+}
