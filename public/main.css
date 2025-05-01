@@ -1,0 +1,365 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Page Layout */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-image: url('/background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh; /* Changed height to min-height for scrolling */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Ensures the content is aligned at the top */
+}
+
+/* Centered App Container */
+.app-container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Welcome Text Styling */
+.app-container h1 {
+    color: #0056D2;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Menu Options Styling */
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-options a {
+    text-decoration: none;
+    padding: 12px 20px;
+    background-color: #0056D2;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-options a:hover {
+    background-color: #003DA6;
+}
+
+/* Original Styles Below */
+
+/* Centered Container for Homepage */
+.homepage-container {
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* White with transparency */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Styling */
+.image-container img {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+/* Welcome Text Styling */
+.welcome-text h1 {
+    color: #0056D2; /* Blue from the logo */
+    margin-bottom: 10px;
+}
+
+.welcome-text p {
+    color: #2B2B2B; /* Neutral dark text */
+    margin-bottom: 20px;
+}
+
+/* Buttons Styling */
+.button-container .btn {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 20px;
+    background-color: #0056D2; /* Blue button */
+    color: #FFFFFF; /* White text */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.button-container .btn:hover {
+    background-color: #003DA6; /* Darker blue on hover */
+}
+
+/* Form Container Styling for Login and Register */
+.form-container {
+    max-width: 500px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* White with transparency */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-container h1 {
+    color: #0056D2; /* Blue title */
+    margin-bottom: 20px;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container label {
+    margin-bottom: 10px;
+    color: #2B2B2B; /* Neutral dark text */
+    font-weight: bold;
+    display: block;
+    text-align: left;
+    width: 100%;
+}
+
+.form-container input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-container button {
+    padding: 10px 20px;
+    background-color: #0056D2; /* Blue button */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #003DA6; /* Darker blue on hover */
+}
+
+/* Error Message Styling */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Forum Page Styling */
+
+/* Forum Container */
+.qa-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 1000px;
+    margin: 20px;
+    text-align: center;
+}
+
+/* Header Styling */
+.qa-container h1 {
+    font-size: 36px;
+    color: #0056D2;
+    margin-bottom: 20px;
+}
+
+.qa-container h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+/* Question List Styles */
+.questions-list {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.questions-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.questions-list li {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.questions-list h3 {
+    font-size: 22px;
+    color: #0056D2;
+    margin-bottom: 10px;
+}
+
+.questions-list p {
+    font-size: 16px;
+    color: #555;
+}
+
+.questions-list small {
+    font-size: 14px;
+    color: #888;
+}
+
+/* Show Responses and Answer Buttons Styling */
+button, .answer-button {
+    padding: 10px 20px;
+    background-color: #0056D2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, .answer-button:hover {
+    background-color: #003DA6;
+}
+
+.answer-button {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+button:focus, .answer-button:focus {
+    outline: none;
+}
+
+/* Responses List Styling */
+.responses-list {
+    margin-top: 15px;
+}
+
+.responses-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.responses-list li {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.responses-list p {
+    font-size: 16px;
+    color: #555;
+}
+
+.responses-list small {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Question Form Styling */
+.question-form {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.question-form label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.question-form input[type="text"],
+.question-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.question-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0056D2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.question-form button:hover {
+    background-color: #003DA6;
+}
+
+/* User Info Styling */
+.qa-container p {
+    font-size: 18px;
+    color: #555;
+}
+
+.qa-container p span {
+    font-weight: bold;
+    color: #0056D2;
+}
+
+/* Back to Menu Button Styling */
+.back-to-menu-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #0056D2; /* Blue color */
+    color: #FFFFFF; /* White text */
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.back-to-menu-btn:hover {
+    background-color: #003DA6; /* Darker blue on hover */
+}
+
