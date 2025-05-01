@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/main.css">
+    <title>Register</title>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Register</h1>
+
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <p class="error-message"><%= errorMessage %></p>
+        <% } %>
+
+        <form method="POST" action="registered">
+            <label for="first">First Name:</label>
+            <input id="first" type="text" name="first" value="<%= typeof first !== 'undefined' ? first : '' %>" required />
+
+            <label for="last">Last Name:</label>
+            <input id="last" type="text" name="last" value="<%= typeof last !== 'undefined' ? last : '' %>" required />
+
+            <label for="email">Email:</label>
+            <input id="email" type="email" name="email" value="<%= typeof email !== 'undefined' ? email : '' %>" required />
+
+            <label for="username">Username:</label>
+            <input id="username" type="text" name="username" value="<%= typeof username !== 'undefined' ? username : '' %>" required />
+
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password" required />
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>

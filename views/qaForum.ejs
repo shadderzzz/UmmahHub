@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A Forum</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <!-- Back to Menu Button -->
+    <a href="/menu" class="back-to-menu-btn">← Back to Menu</a>
+
+    <div class="qa-container">
+        <h1>Q&A Forum</h1>
+        <p>Welcome, <span><%= username %></span>! Ask your questions or explore answers from the community.</p>
+
+        <!-- Existing Questions -->
+        <div class="questions-list">
+            <h2>Questions</h2>
+            <% if (questions.length > 0) { %>
+                <ul>
+                    <% questions.forEach((question) => { %>
+                        <li>
+                            <h3><%= question.title %></h3>
+                            <p><%= question.body %></p>
+                            <small>Asked by <%= question.author %> on <%= question.created_at.toLocaleString() %></small>
+
+                            <!-- Show Responses Button with response count -->
+                            <button onclick="toggleResponses(<%- question.id %>)">
+                                Show Responses (<%= question.responseCount %>)
+                            </button>
+
+                            <!-- Answer This Question Button -->
+                            <a href="/qaForum/<%= question.id %>" class="answer-button">Answer This Question</a>
+
+                            <!-- Responses List -->
+                            <div id="responses-<%= question.id %>" class="responses-list" style="display: none;">
+                                <% if (answers[question.id] && answers[question.id].length > 0) { %>
+                                    <ul>
+                                        <% answers[question.id].forEach((answer) => { %>
+                                            <li>
+                                                <p><%= answer.answer %></p>
+                                                <small>Answered by <%= answer.answer_author %> on <%= answer.created_at.toLocaleString() %></small>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                <% } else { %>
+                                    <p>No responses yet. Be the first to respond!</p>
+                                <% } %>
+                            </div>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No questions have been posted yet. Be the first to ask!</p>
+            <% } %>
+        </div>
+
+        <!-- Question Form -->
+        <div class="question-form">
+            <h2>Ask a Question</h2>
+            <form action="/qaForum/post" method="POST">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Enter your question title" required>
+
+                <label for="body">Details:</label>
+                <textarea id="body" name="body" placeholder="Provide more details about your question" required></textarea>
+
+                <button type="submit">Post Question</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle visibility of responses for a specific question
+        function toggleResponses(questionId) {
+            const responsesDiv = document.getElementById('responses-' + questionId);
+            if (responsesDiv.style.display === "none") {
+                responsesDiv.style.display = "block";
+            } else {
+                responsesDiv.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= question.title %> - Q&A Forum</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div class="qa-container">
+        <h1><%= question.title %></h1>
+        <p><%= question.body %></p>
+        <small>Asked by <%= question.author %> on <%= question.created_at.toLocaleString() %></small>
+
+        <!-- Show the answers (responses) if any -->
+        <div class="responses-list">
+            <h2>Responses</h2>
+            <% if (answers.length > 0) { %>
+                <ul>
+                    <% answers.forEach((answer) => { %>
+                        <li>
+                            <p><%= answer.answer %></p>
+                            <small>Answered by <%= answer.answer_author %> on <%= answer.created_at.toLocaleString() %></small>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } %>
+        </div>
+
+        <!-- If there are no answers, show this message -->
+        <% if (answers.length === 0) { %>
+            <p>No responses yet. Be the first to respond!</p>
+        <% } %>
+
+        <!-- Form for posting an answer -->
+        <div class="answer-form">
+            <h2>Post Your Answer</h2>
+            <form action="/qaForum/<%= question.id %>/answer" method="POST">
+                <textarea name="answer" placeholder="Write your answer here" required></textarea>
+                <button type="submit">Post Answer</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
