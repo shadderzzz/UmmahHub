@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ummah Hub</title>
+    <link rel="stylesheet" type="text/css" href="/main.css">
+</head>
+<body>
+
+<nav>
+    <a href="/">Home</a> |
+    <a href="/qaForum">Q&A Forum</a> |
+    <a href="/duaForum">Dua Forum</a> |
+    <% if (typeof userId !== 'undefined') { %>
+        <a href="/users/logout">Logout</a>
+    <% } else { %>
+        <a href="/users/login">Login</a>
+        <a href="/users/register">Register</a>
+    <% } %>
+</nav>

@@ -8,6 +8,9 @@
 </head>
 <body>
     <div class="qa-container">
+        <!-- Back Button -->
+        <button onclick="history.back()" class="back-button">&larr; Back</button>
+
         <h1><%= question.title %></h1>
         <p><%= question.body %></p>
         <small>Asked by <%= question.author %> on <%= question.created_at.toLocaleString() %></small>
@@ -35,11 +38,12 @@
         <!-- Form for posting an answer -->
         <div class="answer-form">
             <h2>Post Your Answer</h2>
-            <form action="/qaForum/<%= question.id %>/answer" method="POST">
+            <form action="/qaForum/<%= category %>/<%= question.id %>/answer" method="POST">
                 <textarea name="answer" placeholder="Write your answer here" required></textarea>
                 <button type="submit">Post Answer</button>
             </form>
         </div>
     </div>
+
 </body>
 </html>

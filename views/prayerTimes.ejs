@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Times</title>
+    <link rel="stylesheet" href="/main.css"> <!-- Link to your main stylesheet -->
+</head>
+<body>
+    <div class="app-container">
+        <h1>Prayer Times</h1>
+
+        <!-- User Location-Based Prayer Times -->
+        <h3>Enter a City to Get Prayer Times</h3>
+        <label>City: </label>
+        <input type="text" id="city" placeholder="e.g., London">
+        <button onclick="updatePrayerTimes()">Get Prayer Times</button>
+
+        <h3>Prayer Times</h3>
+        <ul id="prayer-times"></ul>
+
+        <h3>Islamic Calendar</h3>
+        <!-- Islamic Finder Calendar (This will be updated dynamically) -->
+        <iframe id="prayer-widget" title="prayerWidget"
+            style="height: 358px; width: 100%; max-width: 400px; border: 1px solid #ddd;"
+            scrolling="no"
+            src="https://www.islamicfinder.org/prayer-widget/2643123/shafi/1/0/18/17">
+        </iframe>
+
+        <br>
+        <a href="/menu">Back to Menu</a>
+    </div>
+
+    <script>
+        async function updatePrayerTimes() {
+            let city = document.getElementById('city').value;
+            if (!city) {
+                document.getElementById('prayer-times').innerHTML = "<li>Please enter a city</li>";
+                return;
+            }
+
+            try {
+                // Fetch prayer times
+                const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=&method=2`);
+                const data = await response.json();
+                
+                if (data && data.data && data.data.timings) {
+                    let timings = data.data.timings;
+                    document.getElementById('prayer-times').innerHTML = `
+                        <li>Fajr: ${timings.Fajr}</li>
+                        <li>Dhuhr: ${timings.Dhuhr}</li>
+                        <li>Asr: ${timings.Asr}</li>
+                        <li>Maghrib: ${timings.Maghrib}</li>
+                        <li>Isha: ${timings.Isha}</li>
+                    `;
+                }
+
+                // Update Islamic Finder Calendar dynamically
+                updateCalendar(city);
+
+            } catch (error) {
+                document.getElementById('prayer-times').innerText = 'Failed to load prayer times';
+            }
+        }
+
+        function updateCalendar(city) {
+            // Fetch city ID from Islamic Finder and update widget
+            let widgetURL = `https://www.islamicfinder.org/prayer-widget/${city}/shafi/1/0/18/17`;
+            document.getElementById("prayer-widget").src = widgetURL;
+        }
+    </script>
+</body>
+</html>

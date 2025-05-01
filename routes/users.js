@@ -38,7 +38,6 @@ router.post('/registered', [
     req.body.username = req.sanitize(req.body.username);
 
     if (!errors.isEmpty()) {
-        // If validation fails, re-render the register page with error messages and form values
         return res.render('register.ejs', {
             errorMessage: errors.array().map(error => error.msg).join(', '),
             first: req.body.first,
@@ -48,74 +47,89 @@ router.post('/registered', [
         });
     }
 
-    // Continue with the registration logic if validation passes
     const plainPassword = req.body.password;
     const username = req.body.username;
     const firstName = req.body.first;
     const lastName = req.body.last;
     const email = req.body.email;
 
-    bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
+    // Check if the username or email already exists
+    const checkUserSql = 'SELECT * FROM users WHERE username = ? OR email = ?';
+    db.query(checkUserSql, [username, email], function (err, results) {
         if (err) {
-            return next(err); // Handle error
+            return next(err);
+        }
+        if (results.length > 0) {
+            const existingUser = results[0];
+            let errorMessage = '';
+            if (existingUser.username === username) {
+                errorMessage = 'Username is already taken. Please choose another.';
+            }
+            if (existingUser.email === email) {
+                errorMessage = errorMessage ? errorMessage + ' Email is already in use.' : 'Email is already in use.';
+            }
+            return res.render('register.ejs', {
+                errorMessage: errorMessage,
+                first: firstName,
+                last: lastName,
+                email: email,
+                username: username
+            });
         }
 
-        const sql = 'INSERT INTO users (username, first_name, last_name, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
-        db.query(sql, [username, firstName, lastName, email, hashedPassword], function (err, result) {
+        // Hash the password and insert the user if username and email are unique
+        bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
             if (err) {
-                return next(err); // Handle error
+                return next(err);
             }
 
-            let resultResponse = 'Hello ' + firstName + ' ' + lastName +
-                ', you are now registered! We will send an email to you at ' + email;
-            res.send(resultResponse);
+            const sql = 'INSERT INTO users (username, first_name, last_name, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
+            db.query(sql, [username, firstName, lastName, email, hashedPassword], function (err, result) {
+                if (err) {
+                    return next(err);
+                }
+                res.redirect('/users/login');
+            });
         });
     });
 });
 
 // Render the login form
 router.get('/login', function (req, res, next) {
-    res.render('login.ejs'); // Renders the login form
+    res.render('login.ejs');
 });
 
 // Handle login form submission
 router.post('/login', function (req, res, next) {
-    // Sanitize user input
     req.body.username = req.sanitize(req.body.username);
     req.body.password = req.sanitize(req.body.password);
 
     const username = req.body.username;
     const plainPassword = req.body.password;
 
-    // Query the database to find the user
     const sql = 'SELECT * FROM users WHERE username = ?';
     db.query(sql, [username], function (err, results) {
         if (err) {
-            return next(err); // Handle error
+            return next(err);
         }
 
-        // If user not found
         if (results.length === 0) {
-            return res.render('login.ejs', { errorMessage: 'User not found.' }); // Handle error for invalid user
+            return res.render('login.ejs', { errorMessage: 'User not found.' });
         }
 
-        const user = results[0]; // Assuming the username is unique
+        const user = results[0];
 
-        // Compare the provided password with the hashed password in the database
         bcrypt.compare(plainPassword, user.hashedPassword, function (err, isMatch) {
             if (err) {
-                return next(err); // Handle error
+                return next(err);
             }
 
             if (!isMatch) {
-                return res.render('login.ejs', { errorMessage: 'Invalid password.' }); // Handle invalid password
+                return res.render('login.ejs', { errorMessage: 'Invalid password.' });
             }
 
-            // Save user session here, when login is successful
             req.session.userId = username;
-
-            // Login successful - redirect to the user list page or any other protected route
-            res.redirect('/menu'); // Redirect to the index page after successful login
+            res.redirect('/menu');
         });
     });
 });
@@ -124,11 +138,12 @@ router.post('/login', function (req, res, next) {
 router.get('/logout', redirectLogin, (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            return res.redirect('./');
+            return res.redirect('/'); // Redirect to home in case of an error
         }
-        res.send('You are now logged out. <a href="./">Home</a>');
+        res.redirect('/'); // Redirect to the home page after logout
     });
 });
+
 
 // Export the router object so index.js can access it
 module.exports = router;

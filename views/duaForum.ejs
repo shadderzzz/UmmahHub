@@ -1,0 +1,74 @@
+<%- include('header') %>
+
+<div class="qa-container">
+    <h1>Dua Forum</h1>
+
+    <h2>Add a Dua Request</h2>
+    <form action="/duaForum/add" method="POST" class="question-form">
+        <textarea name="dua_text" placeholder="Enter your dua here..." required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <h2>Current Dua Requests</h2>
+    <div class="questions-list">
+        <ul id="current-duas">
+            <% duas.forEach(dua => { %>
+                <% if (!dua.seen) { %>
+                    <li id="dua-<%= dua.id %>">
+                        <p><strong><%= dua.username %></strong>: <%= dua.dua_text %></p>
+                        <form action="/duaForum/seen/<%= dua.id %>" method="POST" class="seen-form">
+                            <button type="submit" class="mark-seen" data-id="<%= dua.id %>">Mark as Seen</button>
+                        </form>
+                    </li>
+                <% } %>
+            <% }); %>
+        </ul>
+    </div>
+
+    <h2>
+        <button id="toggle-seen">Show Seen Dua Requests</button>
+    </h2>
+    <div class="questions-list" id="seen-duas-container" style="display: none;">
+        <ul id="seen-duas">
+            <% duas.forEach(dua => { %>
+                <% if (dua.seen) { %>
+                    <li>
+                        <p><strong><%= dua.username %></strong>: <%= dua.dua_text %></p>
+                    </li>
+                <% } %>
+            <% }); %>
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Handle Mark as Seen button click
+        document.querySelectorAll(".mark-seen").forEach(button => {
+            button.addEventListener("click", function(event) {
+                event.preventDefault();
+                const duaId = this.getAttribute("data-id");
+                fetch(`/duaForum/seen/${duaId}`, { method: "POST" })
+                    .then(response => {
+                        if (response.ok) {
+                            document.getElementById(`dua-${duaId}`).remove();
+                        }
+                    });
+            });
+        });
+        
+        // Toggle Seen Dua Requests
+        document.getElementById("toggle-seen").addEventListener("click", function() {
+            const seenContainer = document.getElementById("seen-duas-container");
+            if (seenContainer.style.display === "none") {
+                seenContainer.style.display = "block";
+                this.textContent = "Hide Seen Dua Requests";
+            } else {
+                seenContainer.style.display = "none";
+                this.textContent = "Show Seen Dua Requests";
+            }
+        });
+    });
+</script>
+
+<%- include('footer') %>

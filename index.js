@@ -77,10 +77,18 @@ const ensureLoggedIn = (req, res, next) => {
     next();
 };
 
+app.get('/calendar', (req, res) => {
+    res.render('calendar'); // This will render the 'calendar.ejs' file
+});
+
+app.get('/prayerTimes', (req, res) => {
+    res.render('prayerTimes'); // This will render 'prayerTimes.ejs'
+});
+
+
 // Apply middleware to all routes that need protection
 app.use('/qaForum', ensureLoggedIn);
 
 
 // Start the web app listening
 app.listen(port, () => console.log(`Node app listening on port ${port}!`));
-
