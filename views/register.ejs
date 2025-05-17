@@ -7,37 +7,63 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <header>
-        <h1 class="title">Ummah Hub</h1>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/users/login">Login</a></li>
-                <li><a href="/users/register">Register</a></li>
-            </ul>
-        </nav>
-    </header>
+    <%- include('partials/header') %>
 
-    <main>
+    <main class="auth-main">
         <section class="form-container">
-            <h2>Register</h2>
+            <h2 class="auth-title">Create Account</h2>
+            <p class="auth-subtitle">Join the Ummah Hub community</p>
+            
             <% if (errorMessage) { %>
-                <p class="error-message"><%= errorMessage %></p>
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <%= errorMessage %>
+                </div>
             <% } %>
-            <form action="/users/registered" method="POST">
-                <input type="text" name="first" placeholder="First Name" required value="<%= first || '' %>">
-                <input type="text" name="last" placeholder="Last Name" required value="<%= last || '' %>">
-                <input type="email" name="email" placeholder="Email" required value="<%= email || '' %>">
-                <input type="text" name="username" placeholder="Username" required value="<%= username || '' %>">
-                <input type="password" name="password" placeholder="Password (min 8 characters)" required>
-                <button type="submit">Register</button>
+            
+            <form action="/users/registered" method="POST" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first">First Name</label>
+                        <input type="text" id="first" name="first" required value="<%= first || '' %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="last">Last Name</label>
+                        <input type="text" id="last" name="last" required value="<%= last || '' %>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required value="<%= email || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required value="<%= username || '' %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required 
+                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                           title="Password must be at least 8 characters long and contain at least one letter and one number">
+                    <small class="form-text">Password must be at least 8 characters long and contain both letters and numbers</small>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Account</button>
             </form>
-            <p>Already have an account? <a href="/users/login">Login here</a></p>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="/users/login">Login here</a></p>
+            </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
-    </footer>
+    <%- include('partials/footer') %>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </body>
 </html>

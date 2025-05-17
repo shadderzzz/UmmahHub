@@ -1,0 +1,213 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Header Styling */
+header {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation Bar */
+nav {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.nav-links li {
+    display: inline-block;
+    margin: 0 0.5rem;
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffcc00;
+    transform: translateY(-1px);
+}
+
+.nav-links a:active {
+    transform: translateY(0);
+}
+
+/* Dropdown Styling */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-menu li {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu a {
+    color: #2c3e50;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    display: block;
+    text-align: left;
+    border-radius: 0;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8f9fa;
+    color: #28a745;
+    padding-left: 1.5rem;
+}
+
+/* Login/Logout Button Styling */
+.login-btn, .logout-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover, .logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Content Area */
+main {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Common Headings */
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+/* Footer */
+footer {
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 0.8rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+    }
+
+    nav {
+        margin-top: 0.3rem;
+    }
+
+    .nav-links {
+        gap: 0.3rem;
+    }
+
+    .nav-links a {
+        font-size: 1rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        margin-top: 0.3rem;
+        width: 100%;
+    }
+
+    .login-btn, .logout-btn {
+        padding: 0.5rem 1rem;
+    }
+
+    main {
+        width: 95%;
+        padding: 15px;
+    }
+} 

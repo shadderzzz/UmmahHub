@@ -1,0 +1,172 @@
+/* Index Page Specific Styles */
+
+/* Main Layout */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Welcome Section */
+.welcome {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(33, 136, 56, 0.1) 100%);
+    border-radius: 15px;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.welcome:hover {
+    transform: translateY(-5px);
+}
+
+.welcome h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.welcome p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Featured Articles Section */
+.featured-articles {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.featured-articles h3 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.featured-articles h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #28a745, #218838);
+    border-radius: 2px;
+}
+
+.featured-articles ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 0;
+}
+
+.featured-articles li {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+.featured-articles li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: #28a745;
+}
+
+.featured-articles a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.featured-articles a:hover {
+    color: #28a745;
+}
+
+/* Footer Positioning */
+footer {
+    margin-top: auto;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    text-align: center;
+}
+
+footer p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome {
+        padding: 2rem 1rem;
+    }
+
+    .welcome h2 {
+        font-size: 2rem;
+    }
+
+    .welcome p {
+        font-size: 1.1rem;
+    }
+
+    .featured-articles {
+        padding: 1.5rem;
+    }
+
+    .featured-articles ul {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-articles a {
+        font-size: 1rem;
+    }
+}
+
+/* Animation for Welcome Section */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.featured-articles {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+} 

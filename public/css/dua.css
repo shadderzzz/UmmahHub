@@ -1,0 +1,156 @@
+/* Dua Form */
+.dua-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.dua-form h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+/* Dua Toggle */
+.dua-toggle {
+    margin-bottom: 1.5rem;
+}
+
+.dua-toggle label {
+    margin-right: 1rem;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+#duaCategory {
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    min-width: 200px;
+    cursor: pointer;
+}
+
+/* Dua List */
+.dua-list {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+.dua {
+    background-color: white;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dua p {
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+.dua.seen {
+    background-color: #f8f9fa;
+}
+
+/* Dua Actions */
+.dua-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Dua Form Textarea */
+.dua-form textarea {
+    width: 100%;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Buttons */
+.seen-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.seen-btn:hover {
+    background-color: #218838;
+}
+
+.unseen-btn {
+    background-color: #6c757d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.unseen-btn:hover {
+    background-color: #5a6268;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.submit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dua-form {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .dua-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .seen-btn,
+    .unseen-btn,
+    .delete-btn {
+        width: 100%;
+    }
+} 

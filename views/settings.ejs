@@ -5,26 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - Ummah Hub</title>
     <link rel="stylesheet" href="/styles.css">
-    <style>
-        .success-message {
-            background-color: #e6ffed;
-            color: #256029;
-            padding: 12px;
-            border: 1px solid #a4d4ae;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .error-message {
-            background-color: #ffefef;
-            color: #9d1c1c;
-            padding: 12px;
-            border: 1px solid #f5c2c2;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
     <!-- Header with Navigation Bar -->
@@ -53,6 +33,13 @@
             </ul>
         </nav>
     </header>
+
+    <script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    }
+    </script>
+
 
     <!-- Main Content Section -->
     <main>
@@ -88,6 +75,12 @@
             </div>
         </div>
     </main>
+
+    <!-- Delete Account Section -->
+    <form id="deleteForm" action="/users/delete" method="POST" onsubmit="return confirmDelete()">
+        <button type="submit" class="delete-btn">Delete My Account</button>
+    </form>
+
 
     <!-- Footer -->
     <footer>

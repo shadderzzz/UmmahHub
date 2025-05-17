@@ -69,19 +69,37 @@ router.post('/registered', [
         const sql = 'INSERT INTO users (username, first_name, last_name, email, hashedPassword) VALUES (?, ?, ?, ?, ?)';
         db.query(sql, [username, firstName, lastName, email, hashedPassword], function (err, result) {
             if (err) {
-                return next(err); // Handle error
+                // Check if it's a duplicate entry error
+                if (err.code === 'ER_DUP_ENTRY') {
+                    return res.render('register.ejs', {
+                        errorMessage: 'Username or email already exists',
+                        first: firstName,
+                        last: lastName,
+                        email: email,
+                        username: username
+                    });
+                }
+                return next(err); // Handle other errors
             }
 
-            let resultResponse = 'Hello ' + firstName + ' ' + lastName +
-                ', you are now registered! We will send an email to you at ' + email;
-            res.send(resultResponse);
+            // Store success message in session and redirect to login
+            req.session.successMessage = 'Registration successful! Please login with your credentials.';
+            res.redirect('/users/login');
         });
     });
 });
 
 // Render the login form
 router.get('/login', function (req, res, next) {
-    res.render('login.ejs', {errorMessage: null}); // Ensure errorMessage is always defined
+    // Get success message from session if it exists
+    const successMessage = req.session.successMessage;
+    // Clear the success message from session
+    delete req.session.successMessage;
+    
+    res.render('login.ejs', {
+        errorMessage: null,
+        successMessage: successMessage
+    });
 });
 
 // Handle login form submission
@@ -102,7 +120,10 @@ router.post('/login', function (req, res, next) {
 
         // If user not found
         if (results.length === 0) {
-            return res.render('login.ejs', { errorMessage: 'User not found.' }); // Handle error for invalid user
+            return res.render('login.ejs', { 
+                errorMessage: 'User not found.',
+                successMessage: null
+            }); // Handle error for invalid user
         }
 
         const user = results[0]; // Assuming the username is unique
@@ -114,7 +135,10 @@ router.post('/login', function (req, res, next) {
             }
 
             if (!isMatch) {
-                return res.render('login.ejs', { errorMessage: 'Invalid password.' }); // Handle invalid password
+                return res.render('login.ejs', { 
+                    errorMessage: 'Invalid password.',
+                    successMessage: null
+                }); // Handle invalid password
             }
 
             // Save user session here, when login is successful
@@ -150,7 +174,6 @@ router.get('/settings', redirectLogin, (req, res) => {
     });
 });
 
-
 router.post('/settings', redirectLogin, (req, res) => {
     const newUsername = req.sanitize(req.body.username);
     const location = req.sanitize(req.body.location);
@@ -171,6 +194,38 @@ router.post('/settings', redirectLogin, (req, res) => {
         res.redirect('/users/settings');
     });
 });
+
+router.post('/delete', redirectLogin, (req, res) => {
+    const userId = req.session.userId;
+
+    const getUserSql = 'SELECT id FROM users WHERE username = ?';
+    db.query(getUserSql, [userId], (err, results) => {
+        if (err || results.length === 0) {
+            console.error(err);
+            return res.status(500).send('Error fetching user');
+        }
+
+        const internalUserId = results[0].id;
+
+        const deleteSql = 'DELETE FROM users WHERE id = ?';
+        db.query(deleteSql, [internalUserId], (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Error deleting user');
+            }
+
+            req.session.destroy(err => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).send('Error ending session');
+                }
+
+                res.redirect('/');
+            });
+        });
+    });
+});
+
 
 
 
