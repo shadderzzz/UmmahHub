@@ -3,84 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zakat Calculator</title>
+    <title>Zakat Calculator - Ummah Hub</title>
     <link rel="stylesheet" href="/styles.css">
-    <script>
-        function calculateZakat() {
-            let gold = parseFloat(document.getElementById("gold").value) || 0;
-            let silver = parseFloat(document.getElementById("silver").value) || 0;
-            let cash = parseFloat(document.getElementById("cash").value) || 0;
-            let assets = parseFloat(document.getElementById("assets").value) || 0;
-            let liabilities = parseFloat(document.getElementById("liabilities").value) || 0;
-
-            let totalWealth = gold + silver + cash + assets - liabilities;
-            let nisab = 612.36; // Nisab value in grams of silver
-
-            if (totalWealth >= nisab) {
-                let zakatAmount = totalWealth * 0.025; // 2.5% Zakat
-                document.getElementById("zakatAmount").innerText = `Your Zakat Amount: $${zakatAmount.toFixed(2)}`;
-            } else {
-                document.getElementById("zakatAmount").innerText = "You are below the Nisab threshold, Zakat is not due.";
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="/css/zakat.css">
 </head>
 <body>
-    <header>
-        <h1 class="title">Ummah Hub</h1>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/specialIslamicDays">Islamic Days</a></li>
-                <li class="dropdown">
-                    <a href="#">Forums</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/qaForum">Q&A Forum</a></li>
-                        <li><a href="/duaForum">Dua Forum</a></li>
-                    </ul>
-                </li>
-                <li><a href="/chatbot">Chatbot</a></li>
-                <li><a href="/Zakat">Zakat</a></li>
-                <li><a href="/prayerTimes">Prayer Times</a></li>
-                <% if (!userId) { %>
-                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
-                <% } else { %>
-                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
-                <% } %>
-            </ul>
-        </nav>
-    </header>
+    <%- include('partials/header') %>
 
     <main>
-        <section class="zakat-container">
+        <section class="zakat-container fade-in">
             <h2>Zakat Calculator</h2>
-            <p>Calculate your Zakat easily using our simple tool.</p>
+            <p>Calculate your annual Zakat with our easy-to-use calculator. Enter your assets and liabilities below to determine your Zakat obligation.</p>
 
             <div class="zakat-form">
-                <label for="gold">Gold Value ($):</label>
-                <input type="number" id="gold" placeholder="Enter amount in dollars">
+                <div class="input-group">
+                    <label for="gold">Gold Value</label>
+                    <div class="currency-prefix">
+                        <input type="number" id="gold" min="0" step="0.01" placeholder="Enter gold value">
+                    </div>
+                </div>
                 
-                <label for="silver">Silver Value ($):</label>
-                <input type="number" id="silver" placeholder="Enter amount in dollars">
+                <div class="input-group">
+                    <label for="silver">Silver Value</label>
+                    <div class="currency-prefix">
+                        <input type="number" id="silver" min="0" step="0.01" placeholder="Enter silver value">
+                    </div>
+                </div>
                 
-                <label for="cash">Cash Savings ($):</label>
-                <input type="number" id="cash" placeholder="Enter amount in dollars">
+                <div class="input-group">
+                    <label for="cash">Cash Savings</label>
+                    <div class="currency-prefix">
+                        <input type="number" id="cash" min="0" step="0.01" placeholder="Enter cash amount">
+                    </div>
+                </div>
                 
-                <label for="assets">Other Assets ($):</label>
-                <input type="number" id="assets" placeholder="Enter amount in dollars">
+                <div class="input-group">
+                    <label for="assets">Other Assets</label>
+                    <div class="currency-prefix">
+                        <input type="number" id="assets" min="0" step="0.01" placeholder="Enter assets value">
+                    </div>
+                </div>
                 
-                <label for="liabilities">Liabilities/Debts ($):</label>
-                <input type="number" id="liabilities" placeholder="Enter amount in dollars">
-                
-                <button onclick="calculateZakat()">Calculate Zakat</button>
+                <div class="input-group">
+                    <label for="liabilities">Liabilities/Debts</label>
+                    <div class="currency-prefix">
+                        <input type="number" id="liabilities" min="0" step="0.01" placeholder="Enter debts amount">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button onclick="resetForm()" class="reset-btn">Reset</button>
+                    <button onclick="calculateZakat()" class="calculate-btn">Calculate Zakat</button>
+                </div>
             </div>
 
-            <h3 id="zakatAmount">Your Zakat Amount: --</h3>
+            <div class="result-section" id="resultSection">
+                <h3>Zakat Calculation Result</h3>
+                <div class="amount" id="zakatAmount">--</div>
+                <p class="message" id="zakatMessage"></p>
+            </div>
+
+            <div class="info-box">
+                <h4>About Zakat Calculation</h4>
+                <p>Zakat is calculated at 2.5% of your total wealth when it exceeds the Nisab threshold (equivalent to the value of 612.36 grams of silver). The calculation takes into account your gold, silver, cash, and other assets, minus any liabilities.</p>
+            </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
-    </footer>
+    <%- include('partials/footer') %>
+
+    <script>
+        function calculateZakat() {
+            const gold = parseFloat(document.getElementById("gold").value) || 0;
+            const silver = parseFloat(document.getElementById("silver").value) || 0;
+            const cash = parseFloat(document.getElementById("cash").value) || 0;
+            const assets = parseFloat(document.getElementById("assets").value) || 0;
+            const liabilities = parseFloat(document.getElementById("liabilities").value) || 0;
+
+            const totalWealth = gold + silver + cash + assets - liabilities;
+            const nisab = 612.36; // Nisab value in grams of silver
+            const resultSection = document.getElementById("resultSection");
+            const zakatAmount = document.getElementById("zakatAmount");
+            const zakatMessage = document.getElementById("zakatMessage");
+
+            resultSection.classList.add("show");
+
+            if (totalWealth >= nisab) {
+                const zakat = totalWealth * 0.025; // 2.5% Zakat
+                zakatAmount.innerText = `$${zakat.toFixed(2)}`;
+                zakatMessage.innerText = `Based on your total wealth of $${totalWealth.toFixed(2)}, your annual Zakat obligation is shown above.`;
+            } else {
+                zakatAmount.innerText = `$0.00`;
+                zakatMessage.innerText = `Your total wealth ($${totalWealth.toFixed(2)}) is below the Nisab threshold. No Zakat is due at this time.`;
+            }
+        }
+
+        function resetForm() {
+            const inputs = document.querySelectorAll('.zakat-form input');
+            inputs.forEach(input => input.value = '');
+            
+            const resultSection = document.getElementById("resultSection");
+            resultSection.classList.remove("show");
+            
+            document.getElementById("zakatAmount").innerText = '--';
+            document.getElementById("zakatMessage").innerText = '';
+        }
+
+        // Add enter key support for the last input field
+        document.getElementById('liabilities').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                calculateZakat();
+            }
+        });
+    </script>
 </body>
 </html>

@@ -3,16 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dua Forum</title>
+    <title>Dua Forum - Ummah Hub</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/dua.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         function toggleDuaCategory(category) {
-            document.getElementById('unseenDuas').style.display = (category === 'unseen') ? 'block' : 'none';
-            document.getElementById('seenDuas').style.display = (category === 'seen') ? 'block' : 'none';
+            const unseenSection = document.getElementById('unseenDuas');
+            const seenSection = document.getElementById('seenDuas');
+            
+            if (category === 'unseen') {
+                unseenSection.style.display = 'block';
+                seenSection.style.display = 'none';
+                unseenSection.classList.add('animate-in');
+            } else {
+                unseenSection.style.display = 'none';
+                seenSection.style.display = 'block';
+                seenSection.classList.add('animate-in');
+            }
         }
+
+        function animateSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            submitBtn.classList.add('loading');
+            
+            // Submit the form after a brief delay to show the loading animation
+            setTimeout(() => {
+                form.submit();
+            }, 500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size/2;
+                    const y = e.clientY - rect.top - size/2;
+                    
+                    ripple.style.width = ripple.style.height = `${size}px`;
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        });
     </script>
 </head>
-<body>
+<body class="pattern-bg">
     <header>
         <h1 class="title">Ummah Hub</h1>
         <nav>
@@ -20,10 +67,10 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/specialIslamicDays">Islamic Days</a></li>
                 <li class="dropdown">
-                    <a href="/qaForum">Forums</a>
+                    <a href="/qaForum" class="active">Forums</a>
                     <ul class="dropdown-menu">
                         <li><a href="/qaForum">Q&A Forum</a></li>
-                        <li><a href="/duaForum">Dua Forum</a></li>
+                        <li><a href="/duaForum" class="active">Dua Forum</a></li>
                     </ul>
                 </li>
                 <li><a href="/chatbot">Chatbot</a></li>
@@ -38,67 +85,142 @@
         </nav>
     </header>
 
-    <main>
+    <main class="container">
         <section class="dua-form">
-            <h2>Submit a Dua</h2>
-            <form action="/duaForum/add" method="POST">
-                <textarea name="dua_text" placeholder="Write your Dua here..." required></textarea>
-                <button type="submit" class="submit-btn">Post Dua</button>
+            <div class="form-header">
+                <h2>Share Your Dua</h2>
+                <p class="subtitle">Share your prayers with the community - may Allah accept them all</p>
+            </div>
+            <form action="/duaForum/add" method="POST" onsubmit="animateSubmit(event)">
+                <div class="form-group">
+                    <textarea 
+                        name="dua_text" 
+                        placeholder="Write your Dua here... (In Arabic or English)" 
+                        required
+                    ></textarea>
+                </div>
+                <button type="submit" class="btn submit-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                    Share Dua
+                </button>
             </form>
         </section>
 
         <section class="dua-toggle">
             <label for="duaCategory">View:</label>
             <select id="duaCategory" onchange="toggleDuaCategory(this.value)">
-                <option value="unseen" selected>Unseen Duas</option>
-                <option value="seen">Seen Duas</option>
+                <option value="unseen" selected>New Duas</option>
+                <option value="seen">Previously Seen Duas</option>
             </select>
         </section>
 
         <section id="unseenDuas" class="dua-list">
             <h2>New Duas</h2>
             <% if (unseenDuas.length > 0) { %>
-                <% unseenDuas.forEach(dua => { %>
-                    <div class="dua">
-                        <p><strong><%= dua.username %></strong>: <%= dua.dua_text %></p>
-                        <div class="dua-actions">
-                            <form action="/duaForum/seen/<%= dua.id %>" method="POST">
-                                <button type="submit" class="seen-btn">Mark as Seen</button>
-                            </form>
-                            <% if (dua.username === session.userId) { %>
-                                <form action="/duaForum/delete/<%= dua.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this Dua?');">
-                                    <button type="submit" class="delete-btn">Delete</button>
+                <div class="dua-grid">
+                    <% unseenDuas.forEach((dua, index) => { %>
+                        <div class="dua" style="animation-delay: <%= index * 0.1 %>s">
+                            <div class="dua-content">
+                                <div class="dua-header">
+                                    <strong class="username"><%= dua.username %></strong>
+                                    <span class="timestamp"><%= new Date(dua.created_at).toLocaleString('en-US', { 
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    }) %></span>
+                                </div>
+                                <p class="dua-text"><%= dua.dua_text %></p>
+                            </div>
+                            <div class="dua-actions">
+                                <form action="/duaForum/seen/<%= dua.id %>" method="POST">
+                                    <button type="submit" class="btn seen-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 6L9 17l-5-5"/>
+                                        </svg>
+                                        Mark as Seen
+                                    </button>
                                 </form>
-                            <% } %>
+                                <% if (dua.username === session.userId) { %>
+                                    <form action="/duaForum/delete/<%= dua.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this Dua?');">
+                                        <button type="submit" class="btn delete-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </form>
+                                <% } %>
+                            </div>
                         </div>
-                    </div>
-                <% }) %>
+                    <% }) %>
+                </div>
             <% } else { %>
-                <p>No new Duas.</p>
+                <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        <path d="M21 5c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M21 5c0-1.66-4-3-9-3S3 3.34 3 5"/>
+                    </svg>
+                    <p>No new Duas at the moment.<br>Be the first to share one!</p>
+                </div>
             <% } %>
         </section>
 
         <section id="seenDuas" class="dua-list" style="display: none;">
-            <h2>Seen Duas</h2>
+            <h2>Previously Seen Duas</h2>
             <% if (seenDuas.length > 0) { %>
-                <% seenDuas.forEach(dua => { %>
-                    <div class="dua seen">
-                        <p><strong><%= dua.username %></strong>: <%= dua.dua_text %></p>
-                        <% if (dua.username === session.userId) { %>
-                            <form action="/duaForum/delete/<%= dua.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this Dua?');">
-                                <button type="submit" class="delete-btn">Delete</button>
-                            </form>
-                        <% } %>
-                    </div>
-                <% }) %>
+                <div class="dua-grid">
+                    <% seenDuas.forEach((dua, index) => { %>
+                        <div class="dua seen" style="animation-delay: <%= index * 0.1 %>s">
+                            <div class="dua-content">
+                                <div class="dua-header">
+                                    <strong class="username"><%= dua.username %></strong>
+                                    <span class="timestamp"><%= new Date(dua.created_at).toLocaleString('en-US', { 
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    }) %></span>
+                                </div>
+                                <p class="dua-text"><%= dua.dua_text %></p>
+                            </div>
+                            <% if (dua.username === session.userId) { %>
+                                <div class="dua-actions">
+                                    <form action="/duaForum/delete/<%= dua.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this Dua?');">
+                                        <button type="submit" class="btn delete-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                </div>
             <% } else { %>
-                <p>No Duas marked as seen.</p>
+                <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        <path d="M21 5c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M21 5c0-1.66-4-3-9-3S3 3.34 3 5"/>
+                    </svg>
+                    <p>No seen Duas yet.<br>Mark some Duas as seen to see them here.</p>
+                </div>
             <% } %>
         </section>
     </main>
 
     <footer>
-        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub</p>
+        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub - Connecting Hearts Through Prayer</p>
     </footer>
 </body>
 </html>

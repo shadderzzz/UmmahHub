@@ -5,53 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q&A Forum - Ummah Hub</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/forum.css">
 </head>
 <body>
-    <header>
-        <h1 class="title">Ummah Hub</h1>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/specialIslamicDays">Islamic Days</a></li>
-                <li class="dropdown">
-                    <a href="/qaForum">Forums</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/qaForum">Q&A Forum</a></li>
-                        <li><a href="/duaForum">Dua Forum</a></li>
-                    </ul>
-                </li>
-                <li><a href="/chatbot">Chatbot</a></li>
-                <li><a href="/Zakat">Zakat</a></li>
-                <li><a href="/Prayer Times">Prayer Times</a></li>
-                <% if (!userId) { %>
-                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
-                <% } else { %>
-                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
-                <% } %>
-            </ul>
-        </nav>
-    </header>
+    <%- include('partials/header') %>
 
     <main>
         <section class="forum-container">
+            <div class="decorative-pattern pattern-top-right"></div>
+            <div class="decorative-pattern pattern-bottom-left"></div>
+            
             <h2>Q&A Forum</h2>
-            <p>Choose a category to explore discussions and ask questions.</p>
+            <p>Choose a category to explore discussions and ask questions about Islamic topics. Share your knowledge and learn from others in our community.</p>
 
             <div class="forum-categories">
                 <a href="/qaForum/afterlife" class="forum-box">
                     <h3>Afterlife Forum</h3>
-                    <p>Discuss matters related to the hereafter.</p>
+                    <p>Explore and discuss matters related to the hereafter, paradise, and the day of judgment. Share insights about preparing for the eternal life.</p>
                 </a>
                 <a href="/qaForum/this-life" class="forum-box">
                     <h3>This Life Forum</h3>
-                    <p>Discuss topics related to daily life and Islamic teachings.</p>
+                    <p>Discuss practical aspects of living as a Muslim, including daily practices, relationships, work, and applying Islamic teachings in modern life.</p>
                 </a>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
-    </footer>
+    <%- include('partials/footer') %>
 </body>
 </html>

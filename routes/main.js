@@ -350,6 +350,7 @@ router.get('/duaForum', (req, res) => {
             SELECT 
                 dua_requests.id, 
                 dua_requests.dua_text, 
+                dua_requests.created_at,
                 users.username, 
                 IF(dua_seen.seen IS NULL, 0, 1) AS seen 
             FROM dua_requests 

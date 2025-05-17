@@ -1,97 +1,173 @@
-/* Prayer Times Container */
+/* Prayer Times Page Styles */
 .prayer-times-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--background-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
 }
 
 .prayer-times-container h2 {
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    padding-bottom: var(--spacing-md);
 }
 
-.prayer-times-container label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #666;
+.prayer-times-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--primary-light));
+    border-radius: 2px;
+}
+
+.location-input-group {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    align-items: center;
+    justify-content: center;
+}
+
+.location-input-group label {
     font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-right: var(--spacing-sm);
 }
 
-#locationInput {
-    width: 100%;
+.location-input-group input {
+    flex: 1;
     max-width: 300px;
-    padding: 0.8rem;
-    margin: 0.5rem 0 1rem;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-md);
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: all var(--transition-speed) ease;
 }
 
-button {
-    background-color: #28a745;
-    color: white;
+.location-input-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+
+.location-input-group button {
     padding: 0.8rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    border-radius: var(--border-radius-md);
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all var(--transition-speed) ease;
 }
 
-button:hover {
-    background-color: #218838;
+.location-input-group button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
 }
 
 .prayer-times {
-    background-color: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-top: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: var(--background-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    margin-top: var(--spacing-lg);
 }
 
 .prayer-times h3 {
-    color: #28a745;
-    margin-bottom: 1rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
     font-size: 1.5rem;
 }
 
 .prayer-times ul {
     list-style: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
 }
 
 .prayer-times li {
-    padding: 0.8rem;
-    margin: 0.5rem 0;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    font-size: 1.1rem;
+    background: white;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all var(--transition-speed) ease;
 }
 
-.prayer-times li:last-child {
-    margin-bottom: 0;
+.prayer-times li:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.prayer-times li span {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Loading state */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .prayer-times-container {
+        padding: var(--spacing-lg) var(--spacing-md);
         margin: 1rem;
-        padding: 1.5rem;
     }
 
-    #locationInput {
+    .prayer-times-container h2 {
+        font-size: 2rem;
+    }
+
+    .location-input-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .location-input-group input {
         max-width: 100%;
     }
+
+    .prayer-times ul {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.prayer-times li {
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: calc(var(--item-index) * 0.1s);
+    opacity: 0;
 } 

@@ -3,49 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Islamic Days</title>
+    <title>Special Islamic Days - Ummah Hub</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/special-days.css">
 </head>
 <body>
-    <header>
-        <h1 class="title">Ummah Hub</h1>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/specialIslamicDays">Islamic Days</a></li>
-                <li class="dropdown">
-                    <a href="#">Forums</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/qaForum">Q&A Forum</a></li>
-                        <li><a href="/duaForum">Dua Forum</a></li>
-                    </ul>
-                </li>
-                <li><a href="/chatbot">Chatbot</a></li>
-                <li><a href="/Zakat">Zakat</a></li>
-                <li><a href="/prayerTimes">Prayer Times</a></li>
-                <% if (!userId) { %>
-                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
-                <% } else { %>
-                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
-                <% } %>
-            </ul>
-        </nav>
-    </header>
+    <%- include('partials/header') %>
     
     <main>
+        <div class="decorative-pattern pattern-top-right"></div>
+        <div class="decorative-pattern pattern-bottom-left"></div>
+        
         <section class="special-days-container">
             <h2>Special Islamic Days</h2>
-            <p>Stay updated with important Islamic dates and events.</p>
+            <p>Stay informed about important Islamic dates, celebrations, and commemorations throughout the year. Our calendar helps you track significant days in the Islamic calendar.</p>
+            
             <iframe 
-                style="width: 100%; max-width: 400px; height: 460px; border: 1px solid #ddd;" 
+                class="islamic-calendar-widget fade-in"
                 scrolling="no" 
                 src="https://www.islamicfinder.org/specialislamicdays">
             </iframe>
+
+            <div class="islamic-info">
+                <div class="info-card fade-in">
+                    <h3>Ramadan</h3>
+                    <p>The holy month of fasting, prayer, reflection and community. A time when Muslims worldwide fast from dawn to sunset.</p>
+                </div>
+                <div class="info-card fade-in">
+                    <h3>Eid ul-Fitr</h3>
+                    <p>The festival of breaking the fast, celebrated at the end of Ramadan with special prayers, family gatherings, and charitable giving.</p>
+                </div>
+                <div class="info-card fade-in">
+                    <h3>Eid ul-Adha</h3>
+                    <p>The festival of sacrifice, commemorating Prophet Ibrahim's devotion to Allah and marking the end of Hajj.</p>
+                </div>
+            </div>
         </section>
     </main>
     
-    <footer>
-        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
-    </footer>
+    <%- include('partials/footer') %>
 </body>
 </html>

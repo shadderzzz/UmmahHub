@@ -1,60 +1,238 @@
-/* Zakat Calculator Container */
+/* Zakat Calculator Styles */
 .zakat-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 2rem auto;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--background-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
 }
 
-/* Zakat Form */
+.zakat-container h2 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    padding-bottom: var(--spacing-md);
+}
+
+.zakat-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--primary-light));
+    border-radius: 2px;
+}
+
+.zakat-container > p {
+    text-align: center;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .zakat-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    background: var(--background-light);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.input-group {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: var(--spacing-sm);
 }
 
-.zakat-form label {
-    font-size: 1.1rem;
-    color: #2c3e50;
-}
-
-.zakat-form input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+.input-group label {
+    color: var(--text-dark);
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    font-weight: 500;
 }
 
-.zakat-form button {
-    background-color: #28a745;
-    color: white;
-    padding: 1rem 2rem;
+.input-group input {
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+
+.input-group .currency-prefix {
+    position: relative;
+}
+
+.input-group .currency-prefix input {
+    padding-left: 1.8rem;
+}
+
+.input-group .currency-prefix::before {
+    content: '$';
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.button-group {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.button-group button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
     border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
+    border-radius: var(--border-radius-md);
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
+    transition: all var(--transition-speed) ease;
 }
 
-.zakat-form button:hover {
-    background-color: #218838;
+.calculate-btn {
+    background: var(--primary-color);
+    color: white;
 }
 
-/* Zakat Amount Display */
-#zakatAmount {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    color: #28a745;
-    font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-} 
+.calculate-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.reset-btn {
+    background: var(--background-white);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color) !important;
+}
+
+.reset-btn:hover {
+    background: var(--background-light);
+    transform: translateY(-2px);
+}
+
+.result-section {
+    text-align: center;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    margin-top: var(--spacing-xl);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.result-section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.result-section h3 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.result-section .amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: var(--spacing-md) 0;
+}
+
+.result-section .message {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin-top: var(--spacing-md);
+}
+
+.info-box {
+    background: var(--background-light);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-top: var(--spacing-lg);
+    border-left: 4px solid var(--primary-color);
+}
+
+.info-box h4 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.1rem;
+}
+
+.info-box p {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .zakat-container {
+        margin: 1rem;
+        padding: var(--spacing-lg);
+    }
+
+    .zakat-container h2 {
+        font-size: 2rem;
+    }
+
+    .zakat-form {
+        grid-template-columns: 1fr;
+        padding: var(--spacing-lg);
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group button {
+        width: 100%;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.input-group {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.input-group:nth-child(1) { animation-delay: 0.1s; }
+.input-group:nth-child(2) { animation-delay: 0.2s; }
+.input-group:nth-child(3) { animation-delay: 0.3s; }
+.input-group:nth-child(4) { animation-delay: 0.4s; }
+.input-group:nth-child(5) { animation-delay: 0.5s; } 

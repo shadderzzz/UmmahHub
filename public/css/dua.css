@@ -1,156 +1,372 @@
-/* Dua Form */
-.dua-form {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
+/* Variables */
+:root {
+    --primary-color: #2E7D32;
+    --secondary-color: #1B5E20;
+    --accent-color: #81C784;
+    --text-color: #2c3e50;
+    --background-light: #f8f9fa;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition-standard: all 0.3s ease;
 }
 
-.dua-form h2 {
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Islamic Pattern Background */
+.pattern-bg {
+    background-color: var(--background-light);
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2381C784' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Dua Form */
+.dua-form {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.5s ease-out;
+}
+
+.dua-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+}
+
+.form-header {
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.form-header .subtitle {
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 1.1rem;
+}
+
+.form-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+    transform: scaleX(0.7);
+    transition: var(--transition-standard);
+}
+
+.dua-form:hover h2::after {
+    transform: scaleX(1);
 }
 
 /* Dua Toggle */
 .dua-toggle {
-    margin-bottom: 1.5rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    text-align: center;
 }
 
 .dua-toggle label {
     margin-right: 1rem;
-    color: #2c3e50;
+    color: var(--text-color);
     font-size: 1.1rem;
+    font-weight: 500;
 }
 
 #duaCategory {
-    padding: 0.8rem;
-    border: 2px solid #ddd;
-    border-radius: 5px;
+    padding: 0.8rem 1.2rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
     font-size: 1rem;
-    min-width: 200px;
+    min-width: 220px;
     cursor: pointer;
+    background-color: white;
+    transition: var(--transition-standard);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232E7D32' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2em;
+}
+
+#duaCategory:hover, #duaCategory:focus {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Dua List */
 .dua-list {
-    margin-top: 2rem;
-    text-align: left;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.dua-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
 }
 
 .dua {
     background-color: white;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1.8rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-standard);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-out;
 }
 
-.dua p {
-    color: #2c3e50;
-    line-height: 1.6;
+.dua:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.dua-content {
+    margin-bottom: 1rem;
+}
+
+.dua-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.username {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.timestamp {
+    color: var(--text-color);
+    opacity: 0.6;
+    font-size: 0.9rem;
+}
+
+.dua-text {
+    color: var(--text-color);
+    line-height: 1.8;
+    margin-bottom: 1rem;
 }
 
 .dua.seen {
-    background-color: #f8f9fa;
+    background-color: var(--background-light);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-/* Dua Actions */
-.dua-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-color);
+    opacity: 0.7;
 }
 
-/* Dua Form Textarea */
-.dua-form textarea {
-    width: 100%;
-    padding: 1rem;
-    margin: 1rem 0;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    min-height: 150px;
-    resize: vertical;
+.empty-state svg {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
 /* Buttons */
-.seen-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 0.5rem 1rem;
+.btn {
+    padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-weight: 500;
+    transition: var(--transition-standard);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.seen-btn {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .seen-btn:hover {
-    background-color: #218838;
-}
-
-.unseen-btn {
-    background-color: #6c757d;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.unseen-btn:hover {
-    background-color: #5a6268;
+    background-color: var(--secondary-color);
+    transform: translateY(-1px);
 }
 
 .delete-btn {
     background-color: #dc3545;
     color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .delete-btn:hover {
     background-color: #c82333;
+    transform: translateY(-1px);
 }
 
 .submit-btn {
-    background-color: #28a745;
+    background-color: var(--primary-color);
     color: white;
     padding: 1rem 2rem;
-    border: none;
-    border-radius: 5px;
     font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
     width: 100%;
+    max-width: 300px;
+    margin-top: 1.5rem;
 }
 
 .submit-btn:hover {
-    background-color: #218838;
+    background-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.dua-form textarea {
+    width: 100%;
+    padding: 1.2rem;
+    margin: 1rem 0;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    min-height: 150px;
+    resize: vertical;
+    transition: var(--transition-standard);
+}
+
+.dua-form textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(129, 199, 132, 0.2);
+    outline: none;
+}
+
+/* Ripple Effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 2px solid var(--accent-color);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
     .dua-form {
         margin: 1rem;
         padding: 1.5rem;
     }
 
-    .dua-actions {
-        flex-direction: column;
-        gap: 0.5rem;
+    .dua-grid {
+        grid-template-columns: 1fr;
     }
 
-    .seen-btn,
-    .unseen-btn,
-    .delete-btn {
+    .dua-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .btn {
         width: 100%;
+    }
+
+    #duaCategory {
+        width: 100%;
+        max-width: none;
     }
 } 
