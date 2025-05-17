@@ -24,14 +24,15 @@
                     </ul>
                 </li>
 
-
                 <li><a href="/chatbot">Chatbot</a></li>
                 <li><a href="/Zakat">Zakat</a></li>
                 <li><a href="/prayerTimes">Prayer Times</a></li>
-                <!-- Show Login if not logged in, Show Logout if logged in -->
-                 <% if (!userId) { %>
+
+                <!-- Show Login if not logged in, else show Settings and Logout -->
+                <% if (!userId) { %>
                     <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
                 <% } else { %>
+                    <li><a href="/users/settings">Settings</a></li>
                     <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
                 <% } %>
             </ul>
@@ -43,12 +44,35 @@
         <section class="welcome">
             <% if (userId) { %>
                 <h2>Welcome to Ummah Hub, <%= userId %>!</h2>
-                <p>Explore prayer times, Quranic resources, Islamic articles, and more.</p>
+                <p>Explore prayer times, engage in forums and more.</p>
             <% } else { %>
                 <h2>Welcome to Ummah Hub</h2>
-                <p>Your one-stop platform for prayer times, Quranic resources, Islamic articles, and community support.</p>
+                <p>Your one-stop platform for community support and islamic resources.</p>
             <% } %>
         </section>
+
+        <section class="featured-articles">
+            <h3>Featured Articles</h3>
+            <ul>
+                <li>
+                    <a href="https://myislam.org/blessings-and-importance-of-jummah-prayer/" target="_blank" rel="noopener noreferrer">
+                        🕌 The Importance of Jumu'ah (Friday Prayer)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.islamic-relief.org/zakat/" target="_blank" rel="noopener noreferrer">
+                        💰 How to Give Zakat Correctly
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.charityright.org.uk/blog/post/how-is-hajj-performed/?gad_source=1&gad_campaignid=20048422943&gbraid=0AAAAADQ3ncxejgs3GlLLaBy8jqdGivTWF&gclid=Cj0KCQjwlYHBBhD9ARIsALRu09ouBPc3rRBitRBp_qNHZ3jhnjpk82f3dTz84M2JE_s5MW05Ow8QoZUaAvz8EALw_wcB/" target=_blank" rel="noopener noreferrer">
+                        🌙 Preparing for Hajj: A Spiritual Guide
+                    </a>
+                </li>
+            </ul>
+        </section>
+        
+        
     </main>
 
     <!-- Footer -->

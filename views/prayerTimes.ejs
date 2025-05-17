@@ -68,8 +68,18 @@
         <section class="prayer-times-container">
             <h2>Prayer Times</h2>
             <label for="locationInput">Enter your city and country:</label>
-            <input type="text" id="locationInput" placeholder="e.g., London, UK">
+            <input type="text" id="locationInput" placeholder="e.g., London, UK" value="<%= location %>">
             <button onclick="updatePrayerTimes()">Update</button>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const locationValue = "<%= location %>";
+                    if (locationValue) {
+                        const [city, country] = locationValue.split(',').map(s => s.trim());
+                        if (city && country) fetchPrayerTimes(city, country);
+                    }
+                });
+            </script>
             
             <div class="prayer-times">
                 <h3>Today's Prayer Times</h3>

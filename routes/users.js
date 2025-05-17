@@ -136,5 +136,43 @@ router.get('/logout', redirectLogin, (req, res) => {
     });
 });
 
+router.get('/settings', redirectLogin, (req, res) => {
+    const sql = 'SELECT username, location FROM users WHERE username = ?';
+    db.query(sql, [req.session.userId], (err, results) => {
+        if (err) return res.status(500).send('Database error');
+        if (results.length === 0) return res.redirect('/users/login');
+
+        const user = results[0];
+        const success = req.session.success;
+        delete req.session.success;
+
+        res.render('settings.ejs', { user, success, error: null });
+    });
+});
+
+
+router.post('/settings', redirectLogin, (req, res) => {
+    const newUsername = req.sanitize(req.body.username);
+    const location = req.sanitize(req.body.location);
+
+    const sql = 'UPDATE users SET username = ?, location = ? WHERE username = ?';
+    db.query(sql, [newUsername, location, req.session.userId], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.render('settings.ejs', {
+                user: { username: req.session.userId, location },
+                error: "Username might already be taken.",
+                success: null
+            });
+        }
+
+        req.session.userId = newUsername; // Update session
+        req.session.success = 'Your settings have been updated successfully.';
+        res.redirect('/users/settings');
+    });
+});
+
+
+
 // Export the router object so index.js can access it
 module.exports = router;

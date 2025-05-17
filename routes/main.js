@@ -322,7 +322,7 @@ router.get('/qaForum/:category/:id/answers', (req, res) => {
                 question: question,
                 answers: answers,
                 userId: req.session.userId,
-                category: category // ✅ Ensure category is passed to EJS
+                category: category // Ensure category is passed to EJS
             });
         });
     });

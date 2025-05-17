@@ -69,6 +69,44 @@ nav {
     border-radius: 5px;
 }
 
+.featured-articles {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.featured-articles h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 8px;
+}
+
+.featured-articles ul {
+    list-style: none;
+    padding: 0;
+}
+
+.featured-articles li {
+    margin: 10px 0;
+    font-size: 1.1rem;
+}
+
+.featured-articles a {
+    text-decoration: none;
+    color: #28a745;
+    transition: color 0.3s ease;
+}
+
+.featured-articles a:hover {
+    color: #ffcc00;
+}
+
+
 /* Forum Category Selection */
 .category-selection {
     margin: 50px auto;
@@ -1033,4 +1071,109 @@ button:hover {
 
 .chat-input button:hover {
     background: #218838;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Error Message Styling */
+.error-message {
+    background-color: #e74c3c;
+    color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Form Container Styling */
+.form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Submit Button Styling */
+.submit-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}
+
+.submit-btn:active {
+    background-color: #2471a3;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+
+    .submit-btn {
+        font-size: 1rem;
+    }
+}
+
+.success-message {
+    background-color: #e6ffed;
+    color: #256029;
+    padding: 12px;
+    border: 1px solid #a4d4ae;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }

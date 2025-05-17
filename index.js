@@ -73,8 +73,17 @@ app.use('/', mainRoutes);
 const usersRoutes = require('./routes/users');
 app.use('/users', usersRoutes);
 
-app.get('/prayerTimes', (req, res) => {
-    res.render('prayerTimes', { userId: req.session.userId }); // Pass userId if using sessions
+// Updated this line to use ensureLoggedIn middleware
+app.get('/prayerTimes', ensureLoggedIn, (req, res) => {
+    const sql = 'SELECT location FROM users WHERE username = ?';
+    db.query(sql, [req.session.userId], (err, results) => {
+        if (err || results.length === 0) {
+            return res.render('prayerTimes.ejs', { location: '' });
+        }
+
+        const location = results[0].location || '';
+        res.render('prayerTimes.ejs', { location });
+    });
 });
 
 app.get('/specialIslamicDays', (req, res) => {
@@ -88,7 +97,6 @@ app.get('/zakat', (req, res) => {
 app.get('/chatbot', (req, res) => {
     res.render('chatbot', { userId: req.session.userId });
 });
-
 
 // Home Route
 app.get('/', (req, res) => {

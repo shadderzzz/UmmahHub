@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Ummah Hub</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .success-message {
+            background-color: #e6ffed;
+            color: #256029;
+            padding: 12px;
+            border: 1px solid #a4d4ae;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .error-message {
+            background-color: #ffefef;
+            color: #9d1c1c;
+            padding: 12px;
+            border: 1px solid #f5c2c2;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation Bar -->
+    <header>
+        <h1 class="title">Ummah Hub</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/specialIslamicDays">Islamic Days</a></li>
+                <li class="dropdown">
+                    <a href="#">Forums</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/qaForum">Q&A Forum</a></li>
+                        <li><a href="/duaForum">Dua Forum</a></li>
+                    </ul>
+                </li>
+                <li><a href="/chatbot">Chatbot</a></li>
+                <li><a href="/Zakat">Zakat</a></li>
+                <li><a href="/prayerTimes">Prayer Times</a></li>
+                <% if (!userId) { %>
+                    <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
+                <% } else { %>
+                    <li><a href="/users/settings">Settings</a></li>
+                    <li class="nav-right"><a href="/users/logout" class="logout-btn">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <div class="container">
+            <!-- Feedback Messages Section -->
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="error-message">
+                    <p><%= error %></p>
+                </div>
+            <% } %>
+
+            <% if (typeof success !== 'undefined' && success) { %>
+                <div class="success-message" id="successMessage">
+                    <p><%= success %></p>
+                </div>
+            <% } %>
+
+            <!-- Settings Form Section -->
+            <div class="form-container">
+                <form action="/users/settings" method="POST">
+                    <div class="form-group">
+                        <label for="username">New Username:</label>
+                        <input type="text" id="username" name="username" value="<%= user.username %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location (City, Country):</label>
+                        <input type="text" id="location" name="location" value="<%= user.location || '' %>" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Update</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Ummah Hub. All rights reserved.</p>
+    </footer>
+
+    <!-- Auto-hide success message -->
+    <script>
+        const successBox = document.getElementById('successMessage');
+        if (successBox) {
+            setTimeout(() => {
+                successBox.style.opacity = '0';
+                setTimeout(() => successBox.remove(), 500); // Remove from DOM after fade
+            }, 3000); // Show for 3 seconds
+        }
+    </script>
+</body>
+</html>

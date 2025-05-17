@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR(50),
     email VARCHAR(100) UNIQUE,
     hashedPassword VARCHAR(255),
+    location VARCHAR(255),
     PRIMARY KEY (id)
 );
 
@@ -24,16 +25,6 @@ CREATE TABLE IF NOT EXISTS qaForum (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE answers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    question_id INT NOT NULL,
-    user_id INT NOT NULL,
-    answer TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (question_id) REFERENCES qaForum(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- Create table for "Afterlife" category
