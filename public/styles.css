@@ -14,12 +14,168 @@ body {
 
 /* Header Styling */
 header {
-    background: #28a745;
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
     color: white;
     text-align: center;
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation Bar */
+nav {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.nav-links li {
+    display: inline-block;
+    margin: 0 0.5rem;
+    position: relative;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffcc00;
+    transform: translateY(-1px);
+}
+
+.nav-links a:active {
+    transform: translateY(0);
+}
+
+/* Dropdown Styling */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-menu li {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu a {
+    color: #2c3e50;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    display: block;
+    text-align: left;
+    border-radius: 0;
+    transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8f9fa;
+    color: #28a745;
+    padding-left: 1.5rem;
+}
+
+/* Login/Logout Button Styling */
+.login-btn, .logout-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover, .logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    header {
+        padding: 0.8rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+    }
+
+    nav {
+        margin-top: 0.3rem;
+    }
+
+    .nav-links {
+        gap: 0.3rem;
+    }
+
+    .nav-links a {
+        font-size: 1rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        margin-top: 0.3rem;
+        width: 100%;
+    }
+
+    .login-btn, .logout-btn {
+        padding: 0.5rem 1rem;
+    }
 }
 
 main {
@@ -30,43 +186,6 @@ main {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.title {
-    font-size: 2rem;
-}
-
-/* Navigation Bar */
-nav {
-    margin-top: 10px;
-}
-
-.nav-links {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-.nav-links li {
-    display: inline-block;
-    margin: 0 15px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.nav-links a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #ffcc00;
-    border-radius: 5px;
 }
 
 .featured-articles {
@@ -309,53 +428,6 @@ footer {
     font-size: 0.9rem;
 }
 
-/* Dropdown Menu */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-menu {
-    display: none; /* Hide submenu by default */
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #34495e; /* Darker shade */
-    border-radius: 5px;
-    min-width: 160px;
-    z-index: 1000;
-    text-align: left;
-    padding: 0;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Show submenu only when hovering over the parent */
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-/* Style submenu items */
-.dropdown-menu li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.dropdown-menu a {
-    display: block;
-    padding: 10px;
-    color: white;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: background 0.3s;
-}
-
-/* Hover effect for submenu items */
-.dropdown-menu a:hover {
-    background-color: #ffcc00;
-    color: black;
-}
-
 /* Forum Container */
 .forum-container {
     text-align: center;
@@ -397,22 +469,6 @@ footer {
 .forum-box:hover {
     background-color: #ffcc00;
     transform: scale(1.05);
-}
-
-/* Forum Container */
-.forum-container {
-    text-align: center;
-    padding: 50px;
-}
-
-.forum-container h2 {
-    color: #2c3e50;
-    font-size: 2rem;
-}
-
-.forum-container p {
-    font-size: 1.2rem;
-    color: #555;
 }
 
 /* Forum Form */
@@ -1079,6 +1135,56 @@ button:hover {
     margin: 0 auto;
 }
 
+.chatbot-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.quick-question-btn {
+    background-color: #e8f4f8;
+    border: 1px solid #28a745;
+    color: #28a745;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quick-question-btn:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+.chat-window {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.disclaimer {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 20px;
+    padding: 10px;
+    border-left: 3px solid #28a745;
+    background-color: #f8f9fa;
+}
+
 /* Error Message Styling */
 .error-message {
     background-color: #e74c3c;
@@ -1177,3 +1283,4 @@ button:hover {
     border-radius: 5px;
     margin-bottom: 20px;
 }
+

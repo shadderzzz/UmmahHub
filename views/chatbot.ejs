@@ -3,20 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
+    <title>Islamic Assistant - Ummah Hub</title>
     <link rel="stylesheet" href="/styles.css">
     <script>
-        async function sendMessage() {
-            const userInput = document.getElementById("userInput").value;
+        async function sendMessage(customMessage = null) {
+            const userInput = customMessage || document.getElementById("userInput").value;
+            if (!userInput.trim()) return;
+            
             const responseBox = document.getElementById("response");
-    
+            const loadingDiv = document.createElement("div");
+            loadingDiv.className = "chat-message bot";
+            loadingDiv.innerHTML = "<strong>Assistant:</strong> Thinking...";
+            responseBox.appendChild(loadingDiv);
+
+            const systemContext = `You are an Islamic AI assistant. Your responses should:
+            1. Be based on authentic Islamic sources (Quran and Sahih Hadith)
+            2. Cite sources when possible
+            3. Be respectful and helpful
+            4. Avoid giving fatwas or definitive religious rulings
+            5. Encourage users to consult local scholars for complex matters
+            6. Use appropriate Islamic greetings and phrases`;
+
             const apiKey = "sk-0176c41faafb4701b999560edcfd5228";
             const baseUrl = "https://api.deepseek.com";
-    
+            
             const requestBody = {
                 model: "deepseek-chat",
-                messages: [{ role: "user", content: userInput }],
-                max_tokens: 100
+                messages: [
+                    { role: "system", content: systemContext },
+                    { role: "user", content: userInput }
+                ],
+                max_tokens: 500
             };
     
             try {
@@ -30,20 +47,25 @@
                 });
     
                 if (!response.ok) {
-                    const text = await response.text();
-                    throw new Error(`API Error: ${text}`);
+                    throw new Error(`API Error: ${await response.text()}`);
                 }
     
                 const data = await response.json();
+                responseBox.removeChild(loadingDiv);
                 responseBox.innerHTML += `<div class="chat-message user"><strong>You:</strong> ${userInput}</div>`;
-                responseBox.innerHTML += `<div class="chat-message bot"><strong>Bot:</strong> ${data.choices?.[0]?.message?.content || "No response received."}</div>`;
+                responseBox.innerHTML += `<div class="chat-message bot"><strong>Assistant:</strong> ${data.choices?.[0]?.message?.content || "Apologies, I couldn't generate a response. Please try again."}</div>`;
     
                 document.getElementById("userInput").value = "";
                 responseBox.scrollTop = responseBox.scrollHeight;
     
             } catch (error) {
+                responseBox.removeChild(loadingDiv);
                 responseBox.innerHTML += `<div class="chat-message error">Error: ${error.message}</div>`;
             }
+        }
+
+        function askQuickQuestion(question) {
+            sendMessage(question);
         }
     </script>
 </head>
@@ -53,6 +75,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
+                <li><a href="/specialIslamicDays">Islamic Days</a></li>
                 <li class="dropdown">
                     <a href="#">Forums</a>
                     <ul class="dropdown-menu">
@@ -60,10 +83,9 @@
                         <li><a href="/duaForum">Dua Forum</a></li>
                     </ul>
                 </li>
+                <li><a href="/chatbot">Chatbot</a></li>
                 <li><a href="/Zakat">Zakat</a></li>
                 <li><a href="/prayerTimes">Prayer Times</a></li>
-                <li><a href="/specialIslamicDays">Islamic Days</a></li>
-                <li><a href="/chatbot">Chatbot</a></li>
                 <% if (!userId) { %>
                     <li class="nav-right"><a href="/users/login" class="login-btn">Login</a></li>
                 <% } else { %>
@@ -75,16 +97,32 @@
 
     <main>
         <section class="chatbot-container">
-            <h2>Ask Anything!</h2>
-            <p>Chat with our AI-powered assistant.</p>
+            <h2>Islamic Knowledge Assistant</h2>
+            <p>Ask questions about Islam, get help with daily practices, or learn more about your faith.</p>
+
+            <div class="quick-questions">
+                <button class="quick-question-btn" onclick="askQuickQuestion('What are the five pillars of Islam?')">Five Pillars of Islam</button>
+                <button class="quick-question-btn" onclick="askQuickQuestion('How do I perform wudu correctly?')">How to perform Wudu</button>
+                <button class="quick-question-btn" onclick="askQuickQuestion('What are the conditions for prayer to be valid?')">Prayer Conditions</button>
+                <button class="quick-question-btn" onclick="askQuickQuestion('What are some common daily duas?')">Daily Duas</button>
+                <button class="quick-question-btn" onclick="askQuickQuestion('What breaks the fast in Ramadan?')">Fasting Rules</button>
+            </div>
 
             <div class="chat-window">
-                <div id="response" class="chat-messages"></div>
+                <div id="response" class="chat-messages">
+                    <div class="chat-message bot">
+                        <strong>Assistant:</strong> Assalamu Alaikum! I'm here to help you learn about Islam and answer your questions based on authentic sources. How can I assist you today?
+                    </div>
+                </div>
             </div>
 
             <div class="chat-input">
-                <textarea id="userInput" placeholder="Type your message..." rows="2"></textarea>
+                <textarea id="userInput" placeholder="Type your question about Islam..." rows="2"></textarea>
                 <button onclick="sendMessage()">Send</button>
+            </div>
+
+            <div class="disclaimer">
+                <p><strong>Important Note:</strong> This AI assistant provides general information based on Islamic sources. For specific rulings, personal situations, or complex religious matters, please consult with qualified local scholars or Imams. All answers are generated to the best of the AI's knowledge and should be verified with authentic sources.</p>
             </div>
         </section>
     </main>
