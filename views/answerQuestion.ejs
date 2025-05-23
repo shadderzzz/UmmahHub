@@ -51,6 +51,33 @@
                 });
             }
         });
+
+        function deleteAnswer(answerId) {
+            if (confirm('Are you sure you want to delete this answer? This action cannot be undone.')) {
+                fetch(`/qaForum/<%= category %>/<%= question.id %>/answer/${answerId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Remove the answer from the DOM
+                        const answerElement = document.querySelector(`[data-answer-id="${answerId}"]`);
+                        if (answerElement) {
+                            answerElement.remove();
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the answer.');
+                });
+            }
+        }
     </script>
 </head>
 <body class="pattern-bg">
@@ -100,7 +127,7 @@
 
         <% if (userId) { %>
             <section class="answer-form">
-                <h3>Submit Your Answer</h3>
+                <h3>Post Your Answer</h3>
                 <form action="/qaForum/<%= category %>/<%= question.id %>/answer" method="POST" onsubmit="animateSubmit(event)">
                     <div class="form-group">
                         <textarea 

@@ -261,4 +261,160 @@
         align-items: flex-start;
         gap: 0.5rem;
     }
+}
+
+/* Post Styles */
+.post {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: var(--transition-standard);
+    overflow: hidden;
+}
+
+.post:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.post-content {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.post-content:hover {
+    text-decoration: none;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.post-header h3 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.post p {
+    color: var(--text-color);
+    margin: 1rem 0;
+    line-height: 1.6;
+}
+
+.post small {
+    display: block;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.post small strong {
+    color: var(--primary-color);
+}
+
+/* Delete Button */
+.delete-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: var(--transition-standard);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.delete-btn:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+.delete-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Answer Header */
+.answer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.answer-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.answer-author {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.answer-date {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* View Link */
+.view-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition-standard);
+}
+
+.view-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.button-group .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.button-group .btn:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.button-group .btn svg {
+    width: 20px;
+    height: 20px;
 } 

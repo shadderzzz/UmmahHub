@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Q&A Forum - <%= category === 'afterlife' ? 'Afterlife' : 'This Life' %></title>
     <link rel="stylesheet" href="/styles.css">
+    <script>
+        function deleteQuestion(questionId) {
+            if (confirm('Are you sure you want to delete this question? This action cannot be undone.')) {
+                fetch(`/qaForum/<%= category %>/${questionId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Remove the question from the DOM
+                        const questionElement = document.querySelector(`[data-question-id="${questionId}"]`);
+                        if (questionElement) {
+                            questionElement.remove();
+                        }
+                        // If no questions left, show the empty state message
+                        const forumPosts = document.querySelector('.forum-posts');
+                        if (forumPosts.children.length === 0) {
+                            forumPosts.innerHTML = '<p>No questions yet. Be the first to ask!</p>';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the question.');
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -51,13 +84,22 @@
                     <p>No questions yet. Be the first to ask!</p>
                 <% } else { %>
                     <% questions.forEach(question => { %>
-                        <a href="/qaForum/<%= category %>/<%= question.id %>" class="post-link">
-                            <div class="post">
-                                <h3><%= question.title %></h3>
+                        <div class="post" data-question-id="<%= question.id %>">
+                            <a href="/qaForum/<%= category %>/<%= question.id %>" class="post-content">
+                                <div class="post-header">
+                                    <h3><%= question.title %></h3>
+                                </div>
                                 <p><%= question.body %></p>
                                 <small>Posted by <strong><%= question.author %></strong> on <%= question.created_at.toLocaleString() %></small>
-                            </div>
-                        </a>
+                            </a>
+                            <% if (question.author === username) { %>
+                                <button onclick="deleteQuestion(<%= question.id %>)" class="delete-btn" title="Delete question">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    </svg>
+                                </button>
+                            <% } %>
+                        </div>
                     <% }) %>
                 <% } %>
             </div>

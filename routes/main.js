@@ -31,14 +31,19 @@ router.get('/menu', (req, res) => {
 
 // Category selection page
 router.get('/qaForum', (req, res) => {
-    res.render('forum'); // Render the category selection page
+    res.render('forum', { username: req.session.userId }); // Render the category selection page
 });
 
 // Q&A forum for a specific category
 router.get('/qaForum/:category', (req, res) => {
     const category = req.params.category;
+    
+    // Check if the category is valid
+    if (category !== "afterlife" && category !== "this-life") {
+        return res.status(404).send("Category not found");
+    }
+
     let sql = "";
-    let sqlAnswers = "";
     
     if (category === "afterlife") {
         sql = `
@@ -47,16 +52,6 @@ router.get('/qaForum/:category', (req, res) => {
             JOIN users ON afterlife_questions.author_id = users.id
             ORDER BY afterlife_questions.created_at DESC
         `;
-
-        sqlAnswers = `
-            SELECT afterlife_answers.answer, afterlife_answers.created_at, users.username AS answer_author, afterlife_answers.question_id
-            FROM afterlife_answers
-            JOIN users ON afterlife_answers.user_id = users.id
-            WHERE afterlife_answers.question_id IN (
-                SELECT id FROM afterlife_questions
-            )
-            ORDER BY afterlife_answers.created_at DESC
-        `;
     } else if (category === "this-life") {
         sql = `
             SELECT this_life_questions.id, this_life_questions.title, this_life_questions.body, this_life_questions.created_at, users.username AS author
@@ -64,18 +59,6 @@ router.get('/qaForum/:category', (req, res) => {
             JOIN users ON this_life_questions.author_id = users.id
             ORDER BY this_life_questions.created_at DESC
         `;
-
-        sqlAnswers = `
-            SELECT this_life_answers.answer, this_life_answers.created_at, users.username AS answer_author, this_life_answers.question_id
-            FROM this_life_answers
-            JOIN users ON this_life_answers.user_id = users.id
-            WHERE this_life_answers.question_id IN (
-                SELECT id FROM this_life_questions
-            )
-            ORDER BY this_life_answers.created_at DESC
-        `;
-    } else {
-        return res.status(404).send("Category not found");
     }
 
     db.query(sql, (err, questions) => {
@@ -84,33 +67,18 @@ router.get('/qaForum/:category', (req, res) => {
             return res.status(500).send('Error fetching questions');
         }
 
-        db.query(sqlAnswers, (err, answers) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Error fetching answers');
-            }
-
-            const answersGrouped = questions.reduce((acc, question) => {
-                acc[question.id] = answers.filter(answer => answer.question_id === question.id);
-                question.responseCount = acc[question.id].length;
-                return acc;
-            }, {});
-
-            res.render('qaForum', {
-                questions: questions,
-                answers: answersGrouped,
-                username: req.session.userId,
-                category: category
-            });
+        res.render('qaForum', {
+            questions: questions,
+            username: req.session.userId,
+            category: category
         });
     });
 });
 
-// Route to view a specific question in a category
+// Q&A forum for a specific category
 router.get('/qaForum/:category/:id', (req, res) => {
     const { category, id: questionId } = req.params;
     let sqlQuestion = "";
-    let sqlAnswers = "";
 
     if (category === "afterlife") {
         sqlQuestion = `
@@ -119,28 +87,12 @@ router.get('/qaForum/:category/:id', (req, res) => {
             JOIN users ON afterlife_questions.author_id = users.id
             WHERE afterlife_questions.id = ?
         `;
-
-        sqlAnswers = `
-            SELECT afterlife_answers.answer, afterlife_answers.created_at, users.username AS answer_author
-            FROM afterlife_answers
-            JOIN users ON afterlife_answers.user_id = users.id
-            WHERE afterlife_answers.question_id = ?
-            ORDER BY afterlife_answers.created_at DESC
-        `;
     } else if (category === "this-life") {
         sqlQuestion = `
             SELECT this_life_questions.id, this_life_questions.title, this_life_questions.body, this_life_questions.created_at, users.username AS author
             FROM this_life_questions
             JOIN users ON this_life_questions.author_id = users.id
             WHERE this_life_questions.id = ?
-        `;
-
-        sqlAnswers = `
-            SELECT this_life_answers.answer, this_life_answers.created_at, users.username AS answer_author
-            FROM this_life_answers
-            JOIN users ON this_life_answers.user_id = users.id
-            WHERE this_life_answers.question_id = ?
-            ORDER BY this_life_answers.created_at DESC
         `;
     } else {
         return res.status(404).send("Category not found");
@@ -158,18 +110,10 @@ router.get('/qaForum/:category/:id', (req, res) => {
 
         const question = results[0];
 
-        db.query(sqlAnswers, [questionId], (err, answers) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).send('Error fetching answers');
-            }
-
-            res.render('answerQuestion', { 
-                question: question,
-                answers: answers,
-                username: req.session.userId,
-                category: category
-            });
+        res.render('answerQuestion', { 
+            question: question,
+            username: req.session.userId,
+            category: category
         });
     });
 });
@@ -275,7 +219,7 @@ router.get('/qaForum/:category/:id/answers', (req, res) => {
         `;
 
         sqlAnswers = `
-            SELECT afterlife_answers.answer, afterlife_answers.created_at, users.username AS answer_author
+            SELECT afterlife_answers.id, afterlife_answers.answer, afterlife_answers.created_at, users.username AS answer_author
             FROM afterlife_answers
             JOIN users ON afterlife_answers.user_id = users.id
             WHERE afterlife_answers.question_id = ?
@@ -290,7 +234,7 @@ router.get('/qaForum/:category/:id/answers', (req, res) => {
         `;
 
         sqlAnswers = `
-            SELECT this_life_answers.answer, this_life_answers.created_at, users.username AS answer_author
+            SELECT this_life_answers.id, this_life_answers.answer, this_life_answers.created_at, users.username AS answer_author
             FROM this_life_answers
             JOIN users ON this_life_answers.user_id = users.id
             WHERE this_life_answers.question_id = ?
@@ -328,6 +272,159 @@ router.get('/qaForum/:category/:id/answers', (req, res) => {
     });
 });
 
+// Route to delete a question
+router.delete('/qaForum/:category/:id', (req, res) => {
+    const { category, id: questionId } = req.params;
+    const username = req.session.userId;
+
+    if (!username) {
+        return res.status(401).json({ error: 'Not authenticated' });
+    }
+
+    // First get the question to check ownership
+    let sqlCheck = "";
+    if (category === "afterlife") {
+        sqlCheck = `
+            SELECT q.*, u.username 
+            FROM afterlife_questions q
+            JOIN users u ON q.author_id = u.id
+            WHERE q.id = ?
+        `;
+    } else if (category === "this-life") {
+        sqlCheck = `
+            SELECT q.*, u.username 
+            FROM this_life_questions q
+            JOIN users u ON q.author_id = u.id
+            WHERE q.id = ?
+        `;
+    } else {
+        return res.status(400).json({ error: 'Invalid category' });
+    }
+
+    db.query(sqlCheck, [questionId], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Question not found' });
+        }
+
+        const question = results[0];
+        if (question.username !== username) {
+            return res.status(403).json({ error: 'Not authorized to delete this question' });
+        }
+
+        // If authorized, proceed with deletion
+        // First delete all associated answers
+        let sqlDeleteAnswers = "";
+        if (category === "afterlife") {
+            sqlDeleteAnswers = 'DELETE FROM afterlife_answers WHERE question_id = ?';
+        } else {
+            sqlDeleteAnswers = 'DELETE FROM this_life_answers WHERE question_id = ?';
+        }
+
+        // Delete answers first, then delete the question
+        db.query(sqlDeleteAnswers, [questionId], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Error deleting answers' });
+            }
+
+            // Now delete the question
+            let sqlDeleteQuestion = "";
+            if (category === "afterlife") {
+                sqlDeleteQuestion = 'DELETE FROM afterlife_questions WHERE id = ?';
+            } else {
+                sqlDeleteQuestion = 'DELETE FROM this_life_questions WHERE id = ?';
+            }
+
+            db.query(sqlDeleteQuestion, [questionId], (err, result) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Error deleting question' });
+                }
+                res.json({ message: 'Question and all associated answers deleted successfully' });
+            });
+        });
+    });
+});
+
+// Route to delete an answer
+router.delete('/qaForum/:category/:questionId/answer/:answerId', (req, res) => {
+    const { category, questionId, answerId } = req.params;
+    const username = req.session.userId;
+
+    console.log('Delete answer request:', { category, questionId, answerId, username });
+
+    if (!username) {
+        return res.status(401).json({ error: 'Not authenticated' });
+    }
+
+    // First get the answer to check ownership
+    let sqlCheck = "";
+    if (category === "afterlife") {
+        sqlCheck = `
+            SELECT a.*, u.username 
+            FROM afterlife_answers a
+            JOIN users u ON a.user_id = u.id
+            WHERE a.id = ? AND a.question_id = ?
+        `;
+    } else if (category === "this-life") {
+        sqlCheck = `
+            SELECT a.*, u.username 
+            FROM this_life_answers a
+            JOIN users u ON a.user_id = u.id
+            WHERE a.id = ? AND a.question_id = ?
+        `;
+    } else {
+        return res.status(400).json({ error: 'Invalid category' });
+    }
+
+    console.log('SQL Check Query:', sqlCheck);
+    console.log('Parameters:', [answerId, questionId]);
+
+    db.query(sqlCheck, [answerId, questionId], (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        console.log('Query results:', results);
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Answer not found' });
+        }
+
+        const answer = results[0];
+        console.log('Answer found:', answer);
+        console.log('Username comparison:', { answerUsername: answer.username, currentUsername: username });
+
+        if (answer.username !== username) {
+            return res.status(403).json({ error: 'Not authorized to delete this answer' });
+        }
+
+        // If authorized, proceed with deletion
+        let sqlDelete = "";
+        if (category === "afterlife") {
+            sqlDelete = 'DELETE FROM afterlife_answers WHERE id = ? AND question_id = ?';
+        } else {
+            sqlDelete = 'DELETE FROM this_life_answers WHERE id = ? AND question_id = ?';
+        }
+
+        console.log('SQL Delete Query:', sqlDelete);
+
+        db.query(sqlDelete, [answerId, questionId], (err, result) => {
+            if (err) {
+                console.error('Delete error:', err);
+                return res.status(500).json({ error: 'Error deleting answer' });
+            }
+            console.log('Delete result:', result);
+            res.json({ message: 'Answer deleted successfully' });
+        });
+    });
+});
 
 // Display Dua Forum with Seen and Unseen Categories
 router.get('/duaForum', (req, res) => {
